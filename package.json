@@ -1,0 +1,21 @@
+{
+	"name": "thenativeweb.io",
+	"version": "1.0.0",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@lit/localize": "0.12.2",
+		"@lit/localize-tools": "0.8.0",
+		"esbuild": "0.25.5",
+		"lit": "3.3.0",
+		"sharp-cli": "5.1.0",
+		"typescript": "5.8.3"
+	},
+	"scripts": {
+		"analyze": "npx biome check --error-on-warnings .",
+		"format": "npx biome format --write .",
+		"build": "npx lit-localize build && npx esbuild --bundle --outdir=dist --minify --keep-names --format=esm src/index.ts src/localization/locales/*.ts",
+		"typecheck": "npx lit-localize build && npx tsc",
+		"test": "echo not implemented yet",
+		"watch": "npx esbuild src/index.ts --bundle --outdir=dist --watch --sourcemap --keep-names"
+	}
+}

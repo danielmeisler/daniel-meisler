@@ -1,0 +1,22 @@
+@font-face {
+	font-family: "Acme";
+	src: url("./assets/fonts/Acme-Regular.ttf") format("truetype");
+	font-display: swap;
+}
+
+:root {
+	--font: Acme, system-ui, Arial, sans-serif;
+	--font-color: #ffffff;
+
+	--ptb-border-radius: 1vh;
+}
+
+body {
+	width: 100dvw;
+	height: 100dvh;
+	margin: 0;
+	padding: 0;
+	background-image: url("./assets/app/ptb-background.png");
+	font-family: var(--font);
+	color: var(--font-color);
+}
