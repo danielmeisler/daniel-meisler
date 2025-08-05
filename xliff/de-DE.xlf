@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="de-DE" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s8d1317f2fb764d90">
+  <source>about me</source>
+  <target>über mich</target>
+</trans-unit>
+<trans-unit id="sd7dc3f51106bd11b">
+  <source>career</source>
+  <target>karriere</target>
+</trans-unit>
+<trans-unit id="sc0d4d00a03d2ca3f">
+  <source>skills</source>
+  <target>kenntnisse</target>
+</trans-unit>
+<trans-unit id="sc573b09bc29143b1">
+  <source>blog</source>
+  <target>blog</target>
+</trans-unit>
+<trans-unit id="s623617b538360a63">
+  <source>contact</source>
+  <target>kontakt</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

@@ -10,23 +10,23 @@ class App extends LitElement {
 	menuItems: MenuItem[] = [
 		{
 			name: 'about me',
-			label: msg('About me'),
+			label: msg('about me'),
 		},
 		{
 			name: 'career',
-			label: msg('Career'),
+			label: msg('career'),
 		},
 		{
 			name: 'skills',
-			label: msg('Skills'),
+			label: msg('skills'),
 		},
 		{
 			name: 'blog',
-			label: msg('Blog'),
+			label: msg('blog'),
 		},
 		{
 			name: 'contact',
-			label: msg('Contact'),
+			label: msg('contact'),
 		},
 	];
 
