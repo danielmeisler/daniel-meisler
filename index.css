@@ -1,14 +1,17 @@
 @font-face {
-	font-family: "Acme";
-	src: url("./assets/fonts/Acme-Regular.ttf") format("truetype");
+	font-family: "Geo";
+	src: url("./assets/fonts/Geo-Regular.ttf") format("truetype");
 	font-display: swap;
 }
 
 :root {
-	--font: Acme, system-ui, Arial, sans-serif;
+	--background-color: #222222;
+
+	--font: Geo, system-ui, Arial, sans-serif;
 	--font-color: #ffffff;
 
-	--ptb-border-radius: 1vh;
+	--title-font-size: 48px;
+	--text-font-size: 32px;
 }
 
 body {
@@ -16,7 +19,8 @@ body {
 	height: 100dvh;
 	margin: 0;
 	padding: 0;
-	background-image: url("./assets/app/ptb-background.png");
+	background: var(--background-color);
 	font-family: var(--font);
+	font-size: var(--text-font-size);
 	color: var(--font-color);
 }
