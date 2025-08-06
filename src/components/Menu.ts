@@ -1,9 +1,11 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, type TemplateResult, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
+import type { MenuType } from '../App.js';
 
 export interface MenuItem {
-	name: string;
+	name: MenuType;
 	label: string;
+	content: TemplateResult;
 }
 
 class Menu extends LitElement {
@@ -31,6 +33,7 @@ class Menu extends LitElement {
       font-family: var(--text-font);
       font-size: var(--menu-size);
       color: var(--menu-color);
+      text-transform: lowercase;
 
       &:hover {
         text-decoration: underline;
@@ -38,14 +41,27 @@ class Menu extends LitElement {
     }
   `;
 
-	@property({ attribute: false }) items!: MenuItem[];
+	@property({ type: Array }) items: MenuItem[] = [];
+
+	handleClick(event: Event) {
+		const target = event.currentTarget as HTMLButtonElement;
+		const menuItem = target.dataset.content;
+
+		this.dispatchEvent(
+			new CustomEvent('menu-select', {
+				detail: { name: menuItem },
+				bubbles: true,
+				composed: true,
+			}),
+		);
+	}
 
 	render() {
 		return html`
       <div class="menu-container">
         ${this.items.map(
 					item => html`
-            <button>${item.label}</button>
+            <button @click="${this.handleClick}" data-content="${item.name}">${item.label}</button>
           `,
 				)}
       </div>
