@@ -15,6 +15,7 @@ class Panel extends LitElement {
       border: solid var(--border-size) var(--border-color);
       box-sizing: border-box;
       padding: var(--panel-padding);
+      overflow: hidden;
     }
 
     @media screen and (max-width: 600px) {

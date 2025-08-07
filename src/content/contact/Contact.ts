@@ -9,7 +9,7 @@ class Contact extends LitElement {
 
 	render() {
 		return html`
-      CONTACT
+      <dm-headline>CONTACT</dm-headline>
     `;
 	}
 }

@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 
-class Skills extends LitElement {
+class Languages extends LitElement {
 	static styles = css`
     :host {
       
@@ -9,9 +9,9 @@ class Skills extends LitElement {
 
 	render() {
 		return html`
-      SKILLS
+      <dm-headline>LANGUAGES</dm-headline>
     `;
 	}
 }
 
-customElements.define('dm-skills', Skills);
+customElements.define('dm-skills-languages', Languages);

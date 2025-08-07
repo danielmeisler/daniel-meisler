@@ -1,6 +1,7 @@
 import { LitElement, type TemplateResult, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import type { MenuType } from '../App.js';
+import { SwitchMenu } from '../events/SwitchMenu.js';
 
 export interface MenuItem {
 	name: MenuType;
@@ -69,8 +70,8 @@ class Menu extends LitElement {
 		const menuItem = target.dataset.content;
 
 		this.dispatchEvent(
-			new CustomEvent('menu-select', {
-				detail: { name: menuItem },
+			new CustomEvent(SwitchMenu.name, {
+				detail: { menu: menuItem },
 				bubbles: true,
 				composed: true,
 			}),

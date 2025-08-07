@@ -9,7 +9,7 @@ class AboutMe extends LitElement {
 
 	render() {
 		return html`
-      <div>ABOUT ME</div>
+      <dm-headline>ABOUT ME</dm-headline>
     `;
 	}
 }

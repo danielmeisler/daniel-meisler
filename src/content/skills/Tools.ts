@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 
-class Career extends LitElement {
+class Tools extends LitElement {
 	static styles = css`
     :host {
       
@@ -9,9 +9,9 @@ class Career extends LitElement {
 
 	render() {
 		return html`
-      <dm-headline>CAREER</dm-headline>
+      <dm-headline>TOOLS</dm-headline>
     `;
 	}
 }
 
-customElements.define('dm-career', Career);
+customElements.define('dm-skills-tools', Tools);

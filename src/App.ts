@@ -2,6 +2,8 @@ import { msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { MenuItem } from './components/Menu.js';
+import { SwitchMenu } from './events/SwitchMenu.js';
+import { SwitchPage } from './events/SwitchPage.js';
 
 export type MenuType = 'menu' | 'aboutMe' | 'career' | 'skills' | 'blog' | 'contact';
 
@@ -11,39 +13,22 @@ class App extends LitElement {
 			position: relative;
 		}
 
-		.back-button {
-			height: 30px;
-			aspect-ratio: 1 / 1;
-			padding: 0;
-			background: none;
-			border: none;
-			cursor: pointer;
+		dm-back-button {
 			position: absolute;
-			right: 100%;
+      right: 100%;
 			margin-right: 20px;
-
-			.back-icon {
-				height: 100%;
-				width: 100%;
-				fill: white;
-			}
-
-			&:hover {
-				animation: back-anim 0.5s ease-in-out infinite;
-			}
 		}
 
-		@keyframes back-anim {
-			0%, 100% {
-				transform: translateY(0);
-			}
-			50% {
-				transform: translateX(-20%);
-			}
+		dm-page-controls {
+			margin-top: 10px;
 		}
 	`;
 
 	@state() currentMenu: MenuType = 'menu';
+	@state() currentPage = 1;
+
+	#handleMenuSwitch = this.handleMenuSwitch.bind(this) as EventListener;
+	#handlePageSwitch = this.handlePageSwitch.bind(this) as EventListener;
 
 	menuItems: MenuItem[] = [
 		{
@@ -59,7 +44,10 @@ class App extends LitElement {
 		{
 			name: 'skills',
 			label: msg('skills'),
-			content: [html`<dm-skills></dm-skills>`, html`<dm-skills></dm-skills>`],
+			content: [
+				html`<dm-skills-languages></dm-skills-languages>`,
+				html`<dm-skills-tools></dm-skills-tools>`,
+			],
 		},
 		{
 			name: 'blog',
@@ -73,42 +61,48 @@ class App extends LitElement {
 		},
 	];
 
-	handleMenuSelect(event: CustomEvent) {
-		const selected = event.detail.name as MenuType;
-		this.currentMenu = selected;
+	connectedCallback() {
+		super.connectedCallback();
+		this.addEventListener(SwitchMenu.name, this.#handleMenuSwitch);
+		this.addEventListener(SwitchPage.name, this.#handlePageSwitch);
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.removeEventListener(SwitchMenu.name, this.#handleMenuSwitch);
+		this.removeEventListener(SwitchPage.name, this.#handlePageSwitch);
+	}
+
+	handleMenuSwitch(event: SwitchMenu) {
+		this.currentMenu = event.detail.menu as MenuType;
+	}
+
+	handlePageSwitch(event: SwitchPage) {
+		this.currentPage = event.detail.page;
 	}
 
 	renderContent() {
 		if (this.currentMenu === 'menu') {
+			this.currentPage = 1;
 			return html`
-					<dm-menu .items=${this.menuItems} @menu-select=${this.handleMenuSelect}></dm-menu></dm-menu>
+					<dm-menu .items=${this.menuItems}></dm-menu></dm-menu>
 				`;
 		}
 
 		return this.menuItems.find(item => item.name === this.currentMenu)?.content ?? html``;
 	}
 
-	renderBackButton() {
-		return html`
-			<button class="back-button" @click="${() => {
-				this.currentMenu = 'menu';
-			}}">
-				<svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60">
-					<rect class="cls-1" x="60" y="20" width="40" height="20"/><polyline class="cls-1" points="50 60 0 30 50 0"/>
-				</svg>
-			</button>
-		`;
-	}
-
 	render() {
+		const content = this.renderContent();
 		return html`
 			<dm-layout>
 				<div class="content">
-					${this.currentMenu !== 'menu' ? this.renderBackButton() : ''}
+					${this.currentMenu !== 'menu' ? html`<dm-back-button></dm-back-button>` : ''}
 					<dm-panel>
-						${this.renderContent()}
+						${Array.isArray(content) ? content[this.currentPage - 1] : content}
 					</dm-panel>
 				</div>
+				${Array.isArray(content) ? html`<dm-page-controls current-page="${this.currentPage}" max-pages="${content.length}"></dm-page-controls>` : ''}
 			</dm-layout>
 		`;
 	}

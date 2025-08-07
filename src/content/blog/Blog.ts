@@ -9,7 +9,7 @@ class Blog extends LitElement {
 
 	render() {
 		return html`
-      BLOG
+      <dm-headline>BLOG</dm-headline>
     `;
 	}
 }
