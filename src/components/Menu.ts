@@ -5,15 +5,21 @@ import type { MenuType } from '../App.js';
 export interface MenuItem {
 	name: MenuType;
 	label: string;
-	content: TemplateResult;
+	content: TemplateResult | TemplateResult[];
 }
 
 class Menu extends LitElement {
 	static styles = css`
     :host {
-      --gap-items: 30px;
       --menu-color: var(--font-color);
       --menu-size: var(--title-font-size);
+      --gap-items: 30px;
+
+      --gap-text-underline: 8%;
+      --underline-height: 3px;
+      --underline-width: 90%;
+      --underline-color: var(--font-color);
+      --underline-anim-time: 0.1s;
     }
 
     .menu-container {
@@ -27,6 +33,7 @@ class Menu extends LitElement {
     }
 
     button {
+      position: relative;
       background: none;
       border: none;
       cursor: pointer;
@@ -35,8 +42,22 @@ class Menu extends LitElement {
       color: var(--menu-color);
       text-transform: lowercase;
 
+      &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: var(--gap-text-underline);
+        height: var(--underline-height);
+        width: var(--underline-width);
+        background-color: var(--underline-color);
+        transform: translateX(-50%) scaleX(0);
+        transition: transform var(--underline-anim-time) ease-in-out;
+      }
+
       &:hover {
-        text-decoration: underline;
+        &::before {
+          transform: translateX(-50%) scaleX(1);
+        }
       }
     }
   `;

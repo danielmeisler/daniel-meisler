@@ -699,7 +699,7 @@
         {
           name: "skills",
           label: msg("skills"),
-          content: x`<dm-skills></dm-skills>`
+          content: [x`<dm-skills></dm-skills>`, x`<dm-skills></dm-skills>`]
         },
         {
           name: "blog",
@@ -738,6 +738,19 @@
 				width: 100%;
 				fill: white;
 			}
+
+			&:hover {
+				animation: back-anim 0.5s ease-in-out infinite;
+			}
+		}
+
+		@keyframes back-anim {
+			0%, 100% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateX(-20%);
+			}
 		}
 	`;
     }
@@ -758,8 +771,8 @@
 			<button class="back-button" @click="${() => {
         this.currentMenu = "menu";
       }}">
-				<svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90">
-					<polygon class="cls-1" points="90 20 80 20 70 20 60 20 50 20 50 10 50 0 40 0 40 10 30 10 30 20 20 20 20 30 10 30 10 40 0 40 0 50 10 50 10 60 20 60 20 70 30 70 30 80 40 80 40 90 50 90 50 80 50 70 60 70 70 70 80 70 90 70 100 70 100 60 100 50 100 40 100 30 100 20 90 20"/>
+				<svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60">
+					<rect class="cls-1" x="60" y="20" width="40" height="20"/><polyline class="cls-1" points="50 60 0 30 50 0"/>
 				</svg>
 			</button>
 		`;
@@ -768,7 +781,6 @@
       return x`
 			<dm-layout>
 				<div class="content">
-					<!-- ${this.renderBackButton()} -->
 					${this.currentMenu !== "menu" ? this.renderBackButton() : ""}
 					<dm-panel>
 						${this.renderContent()}
@@ -860,9 +872,15 @@
     static {
       this.styles = i`
     :host {
-      --gap-items: 30px;
       --menu-color: var(--font-color);
       --menu-size: var(--title-font-size);
+      --gap-items: 30px;
+
+      --gap-text-underline: 8%;
+      --underline-height: 3px;
+      --underline-width: 90%;
+      --underline-color: var(--font-color);
+      --underline-anim-time: 0.1s;
     }
 
     .menu-container {
@@ -876,6 +894,7 @@
     }
 
     button {
+      position: relative;
       background: none;
       border: none;
       cursor: pointer;
@@ -884,8 +903,22 @@
       color: var(--menu-color);
       text-transform: lowercase;
 
+      &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: var(--gap-text-underline);
+        height: var(--underline-height);
+        width: var(--underline-width);
+        background-color: var(--underline-color);
+        transform: translateX(-50%) scaleX(0);
+        transition: transform var(--underline-anim-time) ease-in-out;
+      }
+
       &:hover {
-        text-decoration: underline;
+        &::before {
+          transform: translateX(-50%) scaleX(1);
+        }
       }
     }
   `;
