@@ -12,14 +12,14 @@ export interface MenuItem {
 class Menu extends LitElement {
 	static styles = css`
     :host {
-      --menu-color: var(--font-color);
+      --menu-color: var(--read-color);
       --menu-size: var(--title-font-size);
       --gap-items: 30px;
 
       --gap-text-underline: 8%;
       --underline-height: 3px;
       --underline-width: 90%;
-      --underline-color: var(--font-color);
+      --underline-color: var(--read-color);
       --underline-anim-time: 0.1s;
     }
 

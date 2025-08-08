@@ -782,12 +782,19 @@
       this.styles = i`
 		.content {
 			position: relative;
+			display: flex;
 		}
 
 		dm-back-button {
 			position: absolute;
       right: 100%;
-			margin-right: 20px;
+			margin-right: 15px;
+		}
+
+		dm-socials {
+			position: absolute;
+			left: 100%;
+			margin-left: 15px;
 		}
 
 		dm-page-controls {
@@ -820,6 +827,11 @@
 					<dm-menu .items=${this.menuItems}></dm-menu></dm-menu>
 				`;
       }
+      if (this.currentMenu === "settings") {
+        return x`
+					<dm-settings></dm-settings>
+				`;
+      }
       return this.menuItems.find((item) => item.name === this.currentMenu)?.content ?? x``;
     }
     render() {
@@ -831,6 +843,7 @@
 					<dm-panel>
 						${Array.isArray(content) ? content[this.currentPage - 1] : content}
 					</dm-panel>
+					<dm-socials></dm-socials>
 				</div>
 				${Array.isArray(content) ? x`<dm-page-controls current-page="${this.currentPage}" max-pages="${content.length}"></dm-page-controls>` : ""}
 			</dm-layout>
@@ -1060,14 +1073,14 @@
     static {
       this.styles = i`
     :host {
-      --menu-color: var(--font-color);
+      --menu-color: var(--read-color);
       --menu-size: var(--title-font-size);
       --gap-items: 30px;
 
       --gap-text-underline: 8%;
       --underline-height: 3px;
       --underline-width: 90%;
-      --underline-color: var(--font-color);
+      --underline-color: var(--read-color);
       --underline-anim-time: 0.1s;
     }
 
@@ -1334,14 +1347,89 @@
     static {
       this.styles = i`
     :host {
+      --icon-size: 25px;
+      --icon-color: var(--read-color);
+      --anim-shift: 20%;
+      --anim-time: 0.25s;
+    }
 
+    .socials-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .socials-button {
+      height: var(--icon-size);
+      aspect-ratio: 1 / 1;
+      transform: translateY(0);
+      transition: transform var(--anim-time) ease-in-out;
+
+      .icon {
+        height: 100%;
+        width: 100%;
+        fill: var(--icon-color);
+      }
+
+      &:hover {
+        transform: translateX(var(--anim-shift));
+      }
+    }
+
+    button {
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   `;
+    }
+    handleSettings() {
+      this.dispatchEvent(
+        new CustomEvent(SwitchMenu.name, {
+          detail: { menu: "settings" },
+          bubbles: true,
+          composed: true
+        })
+      );
     }
     render() {
       return x`
       <div class="socials-container">
-        
+
+        <a href="https://github.com/danielmeisler" class="socials-button" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.63 96">
+            <path class="cls-1" d="M48.85,0C21.84,0,0,22,0,49.22c0,21.76,13.99,40.17,33.4,46.69,2.43.49,3.32-1.06,3.32-2.36,0-1.14-.08-5.05-.08-9.13-13.59,2.93-16.42-5.87-16.42-5.87-2.18-5.7-5.42-7.17-5.42-7.17-4.45-3.01.32-3.01.32-3.01,4.93.33,7.52,5.05,7.52,5.05,4.37,7.5,11.4,5.38,14.24,4.07.4-3.18,1.7-5.38,3.07-6.6-10.84-1.14-22.24-5.38-22.24-24.28,0-5.38,1.94-9.78,5.01-13.2-.49-1.22-2.18-6.27.49-13.04,0,0,4.12-1.3,13.43,5.05,3.98-1.08,8.09-1.63,12.21-1.63,4.13,0,8.33.57,12.21,1.63,9.3-6.36,13.43-5.05,13.43-5.05,2.67,6.76.97,11.82.49,13.04,3.15,3.42,5.01,7.82,5.01,13.2,0,18.91-11.4,23.06-22.32,24.28,1.78,1.55,3.32,4.48,3.32,9.13,0,6.6-.08,11.9-.08,13.53,0,1.3.89,2.85,3.32,2.36,19.41-6.52,33.4-24.93,33.4-46.69.08-27.22-21.84-49.22-48.77-49.22Z"/>
+          </svg>
+        </a>
+
+        <a href="https://www.instagram.com/daniel.meisler" class="socials-button" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+            <path class="cls-1" d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34" transform="translate(-2.5 -2.5)"/>
+          </svg>
+        </a>
+
+        <a href="https://www.linkedin.com/in/daniel-meisler-22361a379" class="socials-button" target="_blank" rel="noopener noreferrer">
+          <svg enable-background="new 0 0 56.693 56.693" class="icon" version="1.1" viewBox="0 0 56.693 56.693" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g>
+              <path d="M30.071,27.101v-0.077c-0.016,0.026-0.033,0.052-0.05,0.077H30.071z"/>
+              <path d="M49.265,4.667H7.145c-2.016,0-3.651,1.596-3.651,3.563v42.613c0,1.966,1.635,3.562,3.651,3.562h42.12 c2.019,0,3.654-1.597,3.654-3.562V8.23C52.919,6.262,51.283,4.667,49.265,4.667z M18.475,46.304h-7.465V23.845h7.465V46.304z M14.743,20.777h-0.05c-2.504,0-4.124-1.725-4.124-3.88c0-2.203,1.67-3.88,4.223-3.88c2.554,0,4.125,1.677,4.175,3.88 C18.967,19.052,17.345,20.777,14.743,20.777z M45.394,46.304h-7.465V34.286c0-3.018-1.08-5.078-3.781-5.078 c-2.062,0-3.29,1.389-3.831,2.731c-0.197,0.479-0.245,1.149-0.245,1.821v12.543h-7.465c0,0,0.098-20.354,0-22.459h7.465v3.179 c0.992-1.53,2.766-3.709,6.729-3.709c4.911,0,8.594,3.211,8.594,10.11V46.304z"/>
+            </g>
+          </svg>
+        </a>
+
+        <button @click="${this.handleSettings}" class="socials-button">
+          <svg class="icon" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g  fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+              <g  id="Core" transform="translate(-464.000000, -380.000000)">
+                <g id="settings" transform="translate(464.000000, 380.000000)">
+                  <path d="M17.4,11 C17.4,10.7 17.5,10.4 17.5,10 C17.5,9.6 17.5,9.3 17.4,9 L19.5,7.3 C19.7,7.1 19.7,6.9 19.6,6.7 L17.6,3.2 C17.5,3.1 17.3,3 17,3.1 L14.5,4.1 C14,3.7 13.4,3.4 12.8,3.1 L12.4,0.5 C12.5,0.2 12.2,0 12,0 L8,0 C7.8,0 7.5,0.2 7.5,0.4 L7.1,3.1 C6.5,3.3 6,3.7 5.4,4.1 L3,3.1 C2.7,3 2.5,3.1 2.3,3.3 L0.3,6.8 C0.2,6.9 0.3,7.2 0.5,7.4 L2.6,9 C2.6,9.3 2.5,9.6 2.5,10 C2.5,10.4 2.5,10.7 2.6,11 L0.5,12.7 C0.3,12.9 0.3,13.1 0.4,13.3 L2.4,16.8 C2.5,16.9 2.7,17 3,16.9 L5.5,15.9 C6,16.3 6.6,16.6 7.2,16.9 L7.6,19.5 C7.6,19.7 7.8,19.9 8.1,19.9 L12.1,19.9 C12.3,19.9 12.6,19.7 12.6,19.5 L13,16.9 C13.6,16.6 14.2,16.3 14.7,15.9 L17.2,16.9 C17.4,17 17.7,16.9 17.8,16.7 L19.8,13.2 C19.9,13 19.9,12.7 19.7,12.6 L17.4,11 L17.4,11 Z M10,13.5 C8.1,13.5 6.5,11.9 6.5,10 C6.5,8.1 8.1,6.5 10,6.5 C11.9,6.5 13.5,8.1 13.5,10 C13.5,11.9 11.9,13.5 10,13.5 L10,13.5 Z" id="Shape"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+
       </div>
     `;
     }
@@ -1376,13 +1464,102 @@
     static {
       this.styles = i`
     :host {
-      
+      --svg-color: var(--read-color);
+      --title-font-size: 180px;
+      --description-font-size: 39px;
+
+      --anim-time: 1s;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .text {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing var(--anim-time) steps(3);
+      margin-top: -40px;
+
+      .text-title {
+        font-size: var(--title-font-size);
+      }
+
+      .text-description {
+        font-size: var(--description-font-size);
+      }
+    }
+
+    .background {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      &.background-svg {
+        width: 100%;
+        height: 100%;
+        background-color: var(--svg-color);
+      }
+    }
+
+    @keyframes typing {
+      from { height: 0 }
     }
   `;
     }
     render() {
       return x`
-      <dm-headline>BLOG</dm-headline>
+    <div class="container">
+
+      <div class="text">
+        <div class="text-title">${msg("Blog")}</div>
+        <div class="text-description">${msg("under construction")}</div>
+      </div>
+
+      <div class="background">
+        <svg class="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600.16 599.89">
+          <defs><style>.cls-1{fill:#fff;stroke-width:0px;}</style></defs>
+          <polygon class="cls-1" points="52.24 599.89 27.24 599.89 56.74 549.89 81.74 549.89 52.24 599.89"/>
+          <polygon class="cls-1" points="106.74 599.89 81.74 599.89 111.24 549.89 136.24 549.89 106.74 599.89"/>
+          <polygon class="cls-1" points="161.24 599.89 136.24 599.89 165.74 549.89 190.74 549.89 161.24 599.89"/>
+          <polygon class="cls-1" points="215.74 599.89 190.74 599.89 220.24 549.89 245.24 549.89 215.74 599.89"/>
+          <polygon class="cls-1" points="270.24 599.89 245.24 599.89 274.74 549.89 299.74 549.89 270.24 599.89"/>
+          <polygon class="cls-1" points="324.99 599.89 299.99 599.89 329.49 549.89 354.49 549.89 324.99 599.89"/>
+          <polygon class="cls-1" points="379.49 599.89 354.49 599.89 383.99 549.89 408.99 549.89 379.49 599.89"/>
+          <polygon class="cls-1" points="543.24 599.89 518.24 599.89 547.74 549.89 572.74 549.89 543.24 599.89"/>
+          <polygon class="cls-1" points="488.61 599.89 463.61 599.89 493.11 549.89 518.11 549.89 488.61 599.89"/>
+          <polygon class="cls-1" points="434.05 599.89 409.05 599.89 438.55 549.89 463.55 549.89 434.05 599.89"/>
+          <polygon class="cls-1" points="50.13 50 25.13 50 54.63 0 79.63 0 50.13 50"/>
+          <polygon class="cls-1" points="104.63 50 79.63 50 109.13 0 134.13 0 104.63 50"/>
+          <polygon class="cls-1" points="159.13 50 134.13 50 163.63 0 188.63 0 159.13 50"/>
+          <polygon class="cls-1" points="213.63 50 188.63 50 218.13 0 243.13 0 213.63 50"/>
+          <polygon class="cls-1" points="268.13 50 243.13 50 272.63 0 297.63 0 268.13 50"/>
+          <polygon class="cls-1" points="322.88 50 297.88 50 327.38 0 352.38 0 322.88 50"/>
+          <polygon class="cls-1" points="377.38 50 352.38 50 381.88 0 406.88 0 377.38 50"/>
+          <polygon class="cls-1" points="541.13 50 516.13 50 545.63 0 570.63 0 541.13 50"/>
+          <polygon class="cls-1" points="486.5 50 461.5 50 491 0 516 0 486.5 50"/>
+          <polygon class="cls-1" points="431.94 50 406.94 50 436.44 0 461.44 0 431.94 50"/>
+          <polygon class="cls-1" points="0 596.06 27.24 549.89 2.24 549.89 0 553.68 0 596.06"/>
+          <polygon class="cls-1" points=".02 42.56 25.13 0 .13 0 .02 .19 .02 42.56"/>
+          <polygon class="cls-1" points="600.02 553.66 572.74 599.89 597.74 599.89 600.02 596.03 600.02 553.66"/>
+          <polygon class="cls-1" points="600.16 0 600.13 0 570.63 50 595.63 50 600.16 42.33 600.16 0"/>
+        </svg>
+      </div>
+    </div>
     `;
     }
   };
@@ -1427,6 +1604,26 @@
     }
   };
   customElements.define("dm-contact", Contact);
+
+  // src/content/settings/Settings.ts
+  var Settings = class extends i4 {
+    static {
+      __name(this, "Settings");
+    }
+    static {
+      this.styles = i`
+    :host {
+      
+    }
+  `;
+    }
+    render() {
+      return x`
+      <dm-headline>SETTINGS</dm-headline>
+    `;
+    }
+  };
+  customElements.define("dm-settings", Settings);
 
   // src/content/skills/Languages.ts
   var Languages = class extends i4 {
@@ -1492,7 +1689,6 @@
       <div class="container">
         <dm-logo></dm-logo>
         <slot></slot>
-        <dm-socials></dm-socials>
       </div>
     `;
     }

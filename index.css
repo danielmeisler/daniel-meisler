@@ -8,7 +8,7 @@
 	--background-color: #222222;
 
 	--font: Geo, system-ui, Arial, sans-serif;
-	--font-color: #ffffff;
+	--read-color: #ffffff;
 
 	--title-font-size: 48px;
 	--text-font-size: 32px;
@@ -22,5 +22,5 @@ body {
 	background: var(--background-color);
 	font-family: var(--font);
 	font-size: var(--text-font-size);
-	color: var(--font-color);
+	color: var(--read-color);
 }

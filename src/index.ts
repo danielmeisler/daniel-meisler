@@ -12,6 +12,7 @@ import './content/aboutMe/AboutMe.js';
 import './content/blog/Blog.js';
 import './content/career/Career.js';
 import './content/contact/Contact.js';
+import './content/settings/Settings.js';
 import './content/skills/Languages.js';
 import './content/skills/Tools.js';
 

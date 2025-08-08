@@ -5,18 +5,25 @@ import type { MenuItem } from './components/Menu.js';
 import { SwitchMenu } from './events/SwitchMenu.js';
 import { SwitchPage } from './events/SwitchPage.js';
 
-export type MenuType = 'menu' | 'aboutMe' | 'career' | 'skills' | 'blog' | 'contact';
+export type MenuType = 'menu' | 'settings' | 'aboutMe' | 'career' | 'skills' | 'blog' | 'contact';
 
 class App extends LitElement {
 	static styles = css`
 		.content {
 			position: relative;
+			display: flex;
 		}
 
 		dm-back-button {
 			position: absolute;
       right: 100%;
-			margin-right: 20px;
+			margin-right: 15px;
+		}
+
+		dm-socials {
+			position: absolute;
+			left: 100%;
+			margin-left: 15px;
 		}
 
 		dm-page-controls {
@@ -89,6 +96,12 @@ class App extends LitElement {
 				`;
 		}
 
+		if (this.currentMenu === 'settings') {
+			return html`
+					<dm-settings></dm-settings>
+				`;
+		}
+
 		return this.menuItems.find(item => item.name === this.currentMenu)?.content ?? html``;
 	}
 
@@ -101,6 +114,7 @@ class App extends LitElement {
 					<dm-panel>
 						${Array.isArray(content) ? content[this.currentPage - 1] : content}
 					</dm-panel>
+					<dm-socials></dm-socials>
 				</div>
 				${Array.isArray(content) ? html`<dm-page-controls current-page="${this.currentPage}" max-pages="${content.length}"></dm-page-controls>` : ''}
 			</dm-layout>

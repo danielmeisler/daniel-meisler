@@ -19,7 +19,6 @@ class Layout extends LitElement {
       <div class="container">
         <dm-logo></dm-logo>
         <slot></slot>
-        <dm-socials></dm-socials>
       </div>
     `;
 	}
