@@ -12,6 +12,9 @@
     return result;
   };
 
+  // node_modules/@lit/localize/internal/locale-status-event.js
+  var LOCALE_STATUS_EVENT = "lit-localize-status";
+
   // node_modules/@lit/localize/internal/str-tag.js
   var isStrTagged = /* @__PURE__ */ __name((val) => typeof val !== "string" && "strTag" in val, "isStrTagged");
   var joinStringsAndValues = /* @__PURE__ */ __name((strings, values, valueOrder) => {
@@ -28,6 +31,15 @@
 
   // node_modules/@lit/localize/init/install.js
   var msg = defaultMsg;
+  var installed = false;
+  function _installMsgImplementation(impl) {
+    if (installed) {
+      throw new Error("lit-localize can only be configured once");
+    }
+    msg = impl;
+    installed = true;
+  }
+  __name(_installMsgImplementation, "_installMsgImplementation");
 
   // node_modules/@lit/localize/internal/deferred.js
   var Deferred = class {
@@ -56,10 +68,149 @@
   for (let i5 = 0; i5 < 256; i5++) {
     hl[i5] = (i5 >> 4 & 15).toString(16) + (i5 & 15).toString(16);
   }
+  function fnv1a64(str) {
+    let t0 = 0, v0 = 8997, t1 = 0, v1 = 33826, t22 = 0, v2 = 40164, t3 = 0, v3 = 52210;
+    for (let i5 = 0; i5 < str.length; i5++) {
+      v0 ^= str.charCodeAt(i5);
+      t0 = v0 * 435;
+      t1 = v1 * 435;
+      t22 = v2 * 435;
+      t3 = v3 * 435;
+      t22 += v0 << 8;
+      t3 += v1 << 8;
+      t1 += t0 >>> 16;
+      v0 = t0 & 65535;
+      t22 += t1 >>> 16;
+      v1 = t1 & 65535;
+      v3 = t3 + (t22 >>> 16) & 65535;
+      v2 = t22 & 65535;
+    }
+    return hl[v3 >> 8] + hl[v3 & 255] + hl[v2 >> 8] + hl[v2 & 255] + hl[v1 >> 8] + hl[v1 & 255] + hl[v0 >> 8] + hl[v0 & 255];
+  }
+  __name(fnv1a64, "fnv1a64");
+
+  // node_modules/@lit/localize/internal/id-generation.js
+  var HASH_DELIMITER = "";
+  var HTML_PREFIX = "h";
+  var STRING_PREFIX = "s";
+  function generateMsgId(strings, isHtmlTagged) {
+    return (isHtmlTagged ? HTML_PREFIX : STRING_PREFIX) + fnv1a64(typeof strings === "string" ? strings : strings.join(HASH_DELIMITER));
+  }
+  __name(generateMsgId, "generateMsgId");
+
+  // node_modules/@lit/localize/internal/runtime-msg.js
+  var expressionOrders = /* @__PURE__ */ new WeakMap();
+  var hashCache = /* @__PURE__ */ new Map();
+  function runtimeMsg(templates2, template, options) {
+    if (templates2) {
+      const id = options?.id ?? generateId(template);
+      const localized = templates2[id];
+      if (localized) {
+        if (typeof localized === "string") {
+          return localized;
+        } else if ("strTag" in localized) {
+          return joinStringsAndValues(
+            localized.strings,
+            // Cast `template` because its type wasn't automatically narrowed (but
+            // we know it must be the same type as `localized`).
+            template.values,
+            localized.values
+          );
+        } else {
+          let order = expressionOrders.get(localized);
+          if (order === void 0) {
+            order = localized.values;
+            expressionOrders.set(localized, order);
+          }
+          return {
+            ...localized,
+            values: order.map((i5) => template.values[i5])
+          };
+        }
+      }
+    }
+    return defaultMsg(template);
+  }
+  __name(runtimeMsg, "runtimeMsg");
+  function generateId(template) {
+    const strings = typeof template === "string" ? template : template.strings;
+    let id = hashCache.get(strings);
+    if (id === void 0) {
+      id = generateMsgId(strings, typeof template !== "string" && !("strTag" in template));
+      hashCache.set(strings, id);
+    }
+    return id;
+  }
+  __name(generateId, "generateId");
 
   // node_modules/@lit/localize/init/runtime.js
+  function dispatchStatusEvent(detail) {
+    window.dispatchEvent(new CustomEvent(LOCALE_STATUS_EVENT, { detail }));
+  }
+  __name(dispatchStatusEvent, "dispatchStatusEvent");
+  var activeLocale = "";
+  var loadingLocale;
+  var sourceLocale;
+  var validLocales;
+  var loadLocale;
+  var templates;
   var loading = new Deferred();
   loading.resolve();
+  var requestId = 0;
+  var configureLocalization = /* @__PURE__ */ __name((config) => {
+    _installMsgImplementation((template, options) => runtimeMsg(templates, template, options));
+    activeLocale = sourceLocale = config.sourceLocale;
+    validLocales = new Set(config.targetLocales);
+    validLocales.add(config.sourceLocale);
+    loadLocale = config.loadLocale;
+    return { getLocale, setLocale };
+  }, "configureLocalization");
+  var getLocale = /* @__PURE__ */ __name(() => {
+    return activeLocale;
+  }, "getLocale");
+  var setLocale = /* @__PURE__ */ __name((newLocale) => {
+    if (newLocale === (loadingLocale ?? activeLocale)) {
+      return loading.promise;
+    }
+    if (!validLocales || !loadLocale) {
+      throw new Error("Internal error");
+    }
+    if (!validLocales.has(newLocale)) {
+      throw new Error("Invalid locale code");
+    }
+    requestId++;
+    const thisRequestId = requestId;
+    loadingLocale = newLocale;
+    if (loading.settled) {
+      loading = new Deferred();
+    }
+    dispatchStatusEvent({ status: "loading", loadingLocale: newLocale });
+    const localePromise = newLocale === sourceLocale ? (
+      // We could switch to the source locale synchronously, but we prefer to
+      // queue it on a microtask so that switching locales is consistently
+      // asynchronous.
+      Promise.resolve({ templates: void 0 })
+    ) : loadLocale(newLocale);
+    localePromise.then((mod) => {
+      if (requestId === thisRequestId) {
+        activeLocale = newLocale;
+        loadingLocale = void 0;
+        templates = mod.templates;
+        dispatchStatusEvent({ status: "ready", readyLocale: newLocale });
+        loading.resolve();
+      }
+    }, (err) => {
+      if (requestId === thisRequestId) {
+        dispatchStatusEvent({
+          status: "error",
+          errorLocale: newLocale,
+          errorMessage: err.toString()
+        });
+        loading.reject(err);
+      }
+    });
+    return loading.promise;
+  }, "setLocale");
 
   // node_modules/@lit/reactive-element/css-tag.js
   var t = globalThis;
@@ -736,6 +887,48 @@
     }
   };
 
+  // src/localization/locale-codes.ts
+  var sourceLocale2 = `en-US`;
+  var targetLocales = [
+    `de-DE`
+  ];
+  var allLocales = [
+    `de-DE`,
+    `en-US`
+  ];
+
+  // src/services/localization.ts
+  var currentLanguage;
+  var { getLocale: getLocale2, setLocale: setLocale2 } = configureLocalization({
+    sourceLocale: sourceLocale2,
+    targetLocales,
+    loadLocale: /* @__PURE__ */ __name((locale) => import(`/dist/localization/locales/${locale}.js`), "loadLocale")
+  });
+  var initLanguage = /* @__PURE__ */ __name(async () => {
+    const locale = getUserLanguage();
+    await setUserLanguage(locale);
+  }, "initLanguage");
+  var getUserLanguage = /* @__PURE__ */ __name(() => {
+    const navigatorLanguage = navigator.language;
+    let language = currentLanguage ?? navigatorLanguage;
+    if (!isLanguageValid(language)) {
+      language = sourceLocale2;
+    }
+    return language;
+  }, "getUserLanguage");
+  var setUserLanguage = /* @__PURE__ */ __name(async (locale) => {
+    if (isLanguageValid(locale)) {
+      currentLanguage = locale;
+      await setLocale2(locale);
+    }
+  }, "setUserLanguage");
+  var isLanguageValid = /* @__PURE__ */ __name((value) => {
+    if (allLocales.includes(value)) {
+      return true;
+    }
+    return false;
+  }, "isLanguageValid");
+
   // src/App.ts
   var App = class extends i4 {
     constructor() {
@@ -807,6 +1000,7 @@
     #handlePageSwitch;
     connectedCallback() {
       super.connectedCallback();
+      initLanguage();
       this.addEventListener(SwitchMenu.name, this.#handleMenuSwitch);
       this.addEventListener(SwitchPage.name, this.#handlePageSwitch);
     }
@@ -937,11 +1131,13 @@
       this.styles = i`
     :host {
       --headline-font-size: 40px;
+      --gap-headline-content: 30px;
       --anim-time: calc(var(--steps) * 0.1s);
     }
 
     .container {
       display: inline-block;
+      margin-bottom: var(--gap-headline-content);
     }
 
     h1 {
@@ -1348,8 +1544,9 @@
     static {
       this.styles = i`
     :host {
-      --icon-size: 25px;
       --icon-color: var(--read-color);
+      --icon-size: 25px;
+      --gap-icons: 15px;
       --anim-shift: 20%;
       --anim-time: 0.25s;
     }
@@ -1357,7 +1554,7 @@
     .socials-container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: var(--gap-icons);
     }
 
     .socials-button {
@@ -1404,17 +1601,25 @@
           </svg>
         </a>
 
+        <a href="https://www.linkedin.com/in/daniel-meisler-22361a379" class="socials-button" target="_blank" rel="noopener noreferrer">
+          <svg enable-background="new 0 0 56.693 56.693" class="icon" version="1.1" viewBox="0 0 56.693 56.693" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g>
+              <path d="M30.071,27.101v-0.077c-0.016,0.026-0.033,0.052-0.05,0.077H30.071z"/>
+              <path d="M49.265,4.667H7.145c-2.016,0-3.651,1.596-3.651,3.563v42.613c0,1.966,1.635,3.562,3.651,3.562h42.12 c2.019,0,3.654-1.597,3.654-3.562V8.23C52.919,6.262,51.283,4.667,49.265,4.667z M18.475,46.304h-7.465V23.845h7.465V46.304z M14.743,20.777h-0.05c-2.504,0-4.124-1.725-4.124-3.88c0-2.203,1.67-3.88,4.223-3.88c2.554,0,4.125,1.677,4.175,3.88 C18.967,19.052,17.345,20.777,14.743,20.777z M45.394,46.304h-7.465V34.286c0-3.018-1.08-5.078-3.781-5.078 c-2.062,0-3.29,1.389-3.831,2.731c-0.197,0.479-0.245,1.149-0.245,1.821v12.543h-7.465c0,0,0.098-20.354,0-22.459h7.465v3.179 c0.992-1.53,2.766-3.709,6.729-3.709c4.911,0,8.594,3.211,8.594,10.11V46.304z"/>
+            </g>
+          </svg>
+        </a>
+
         <a href="https://www.instagram.com/daniel.meisler" class="socials-button" target="_blank" rel="noopener noreferrer">
           <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
             <path class="cls-1" d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34" transform="translate(-2.5 -2.5)"/>
           </svg>
         </a>
 
-        <a href="https://www.linkedin.com/in/daniel-meisler-22361a379" class="socials-button" target="_blank" rel="noopener noreferrer">
-          <svg enable-background="new 0 0 56.693 56.693" class="icon" version="1.1" viewBox="0 0 56.693 56.693" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g>
-              <path d="M30.071,27.101v-0.077c-0.016,0.026-0.033,0.052-0.05,0.077H30.071z"/>
-              <path d="M49.265,4.667H7.145c-2.016,0-3.651,1.596-3.651,3.563v42.613c0,1.966,1.635,3.562,3.651,3.562h42.12 c2.019,0,3.654-1.597,3.654-3.562V8.23C52.919,6.262,51.283,4.667,49.265,4.667z M18.475,46.304h-7.465V23.845h7.465V46.304z M14.743,20.777h-0.05c-2.504,0-4.124-1.725-4.124-3.88c0-2.203,1.67-3.88,4.223-3.88c2.554,0,4.125,1.677,4.175,3.88 C18.967,19.052,17.345,20.777,14.743,20.777z M45.394,46.304h-7.465V34.286c0-3.018-1.08-5.078-3.781-5.078 c-2.062,0-3.29,1.389-3.831,2.731c-0.197,0.479-0.245,1.149-0.245,1.821v12.543h-7.465c0,0,0.098-20.354,0-22.459h7.465v3.179 c0.992-1.53,2.766-3.709,6.729-3.709c4.911,0,8.594,3.211,8.594,10.11V46.304z"/>
+        <a href="mailto:daniel_meisler@web.de" class="socials-button">
+          <svg class="icon" version="1.1" id="Filled_Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+            <g id="mail-filled">
+              <path d="M24,5.7V21H0V5.7l12,10L24,5.7z M12,13l12-9.9V3H0v0.1L12,13z"/>
             </g>
           </svg>
         </a>
@@ -1594,20 +1799,132 @@
     static {
       this.styles = i`
     :host {
-      
+      --icon-color: gray;
+      --icon-size: 25px;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      gap: 20px;
+    }
+
+    .contact-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .icon {
+      height: var(--icon-size);
+      aspect-ratio: 1 / 1;
+      fill: var(--icon-color);
+    }
+
+    a {
+      text-decoration: none;
+      color: gray;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+
+      &:hover {
+        color: white;
+        text-decoration: underline;
+
+        svg {
+          fill: white;
+        }
+      }
     }
   `;
     }
     render() {
       return x`
-      <dm-headline>CONTACT</dm-headline>
+      <dm-headline>${msg("Contact")}:</dm-headline>
+
+      <div class="contact-container">
+        <div class="contact-section">
+          ${msg("You can contact me via mail at ")}
+          <a href="mailto:daniel_meisler@web.de">
+            <svg class="icon" version="1.1" id="Filled_Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+              <g id="mail-filled">
+                <path d="M24,5.7V21H0V5.7l12,10L24,5.7z M12,13l12-9.9V3H0v0.1L12,13z"/>
+              </g>
+            </svg>
+            daniel_meisler@web.de
+          </a>
+        </div>
+
+        <div class="contact-section">
+          ${msg("You can check out my instagram at ")}
+          <a href="https://www.instagram.com/daniel.meisler">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+              <path class="cls-1" d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34" transform="translate(-2.5 -2.5)"/>
+            </svg>
+            @daniel.meisler
+          </a>
+        </div>
+
+        <div class="contact-section">
+          ${msg("You can see my projects on my github at ")}
+          <a href="https://github.com/danielmeisler">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.63 96">
+              <path class="cls-1" d="M48.85,0C21.84,0,0,22,0,49.22c0,21.76,13.99,40.17,33.4,46.69,2.43.49,3.32-1.06,3.32-2.36,0-1.14-.08-5.05-.08-9.13-13.59,2.93-16.42-5.87-16.42-5.87-2.18-5.7-5.42-7.17-5.42-7.17-4.45-3.01.32-3.01.32-3.01,4.93.33,7.52,5.05,7.52,5.05,4.37,7.5,11.4,5.38,14.24,4.07.4-3.18,1.7-5.38,3.07-6.6-10.84-1.14-22.24-5.38-22.24-24.28,0-5.38,1.94-9.78,5.01-13.2-.49-1.22-2.18-6.27.49-13.04,0,0,4.12-1.3,13.43,5.05,3.98-1.08,8.09-1.63,12.21-1.63,4.13,0,8.33.57,12.21,1.63,9.3-6.36,13.43-5.05,13.43-5.05,2.67,6.76.97,11.82.49,13.04,3.15,3.42,5.01,7.82,5.01,13.2,0,18.91-11.4,23.06-22.32,24.28,1.78,1.55,3.32,4.48,3.32,9.13,0,6.6-.08,11.9-.08,13.53,0,1.3.89,2.85,3.32,2.36,19.41-6.52,33.4-24.93,33.4-46.69.08-27.22-21.84-49.22-48.77-49.22Z"/>
+            </svg>
+            danielmeisler
+          </a>
+        </div>
+
+        <div class="contact-section">
+          ${msg("You can see my LinkedIn at")}
+          <a href="https://www.linkedin.com/in/daniel-meisler-22361a379">
+            <svg enable-background="new 0 0 56.693 56.693" class="icon" version="1.1" viewBox="0 0 56.693 56.693" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g>
+                <path d="M30.071,27.101v-0.077c-0.016,0.026-0.033,0.052-0.05,0.077H30.071z"/>
+                <path d="M49.265,4.667H7.145c-2.016,0-3.651,1.596-3.651,3.563v42.613c0,1.966,1.635,3.562,3.651,3.562h42.12 c2.019,0,3.654-1.597,3.654-3.562V8.23C52.919,6.262,51.283,4.667,49.265,4.667z M18.475,46.304h-7.465V23.845h7.465V46.304z M14.743,20.777h-0.05c-2.504,0-4.124-1.725-4.124-3.88c0-2.203,1.67-3.88,4.223-3.88c2.554,0,4.125,1.677,4.175,3.88 C18.967,19.052,17.345,20.777,14.743,20.777z M45.394,46.304h-7.465V34.286c0-3.018-1.08-5.078-3.781-5.078 c-2.062,0-3.29,1.389-3.831,2.731c-0.197,0.479-0.245,1.149-0.245,1.821v12.543h-7.465c0,0,0.098-20.354,0-22.459h7.465v3.179 c0.992-1.53,2.766-3.709,6.729-3.709c4.911,0,8.594,3.211,8.594,10.11V46.304z"/>
+              </g>
+            </svg>
+            Daniel Meisler
+          </a>
+        </div>
+      </div>
     `;
     }
   };
   customElements.define("dm-contact", Contact);
 
+  // src/services/theming.ts
+  var allThemes = ["dark", "light"];
+  var userDefaultTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  var setUserTheming = /* @__PURE__ */ __name((theme) => {
+    if (!isThemingValid(theme)) {
+      return;
+    }
+    const themeColorElement = document.querySelector('meta[name="theme-color"]');
+    if (themeColorElement) {
+      themeColorElement.setAttribute("content", theme === "dark" ? "#222222" : "#ffffff");
+    }
+  }, "setUserTheming");
+  var isThemingValid = /* @__PURE__ */ __name((value) => {
+    if (allThemes.includes(value)) {
+      return true;
+    }
+    return false;
+  }, "isThemingValid");
+
   // src/content/settings/Settings.ts
   var Settings = class extends i4 {
+    constructor() {
+      super(...arguments);
+      this.currentTheme = allThemes[0];
+      this.currentLocale = getUserLanguage();
+      this.localeNames = {
+        "en-US": "English",
+        "de-DE": "Deutsch"
+      };
+    }
     static {
       __name(this, "Settings");
     }
@@ -1616,14 +1933,106 @@
     :host {
       
     }
+
+    .content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .settings-container {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    select {
+      background: #222222;
+      font-family: Geo;
+      font-size: 28px;
+      color: white;
+      border: solid 1px white;
+      padding: 5px;
+      cursor: pointer;
+    }
   `;
+    }
+    handleTheming(event) {
+      const clickedTheme = event.currentTarget.dataset.theme;
+      if (clickedTheme && allThemes.includes(clickedTheme)) {
+        setUserTheming(clickedTheme);
+        this.currentTheme = clickedTheme;
+        this.checkActiveTheme();
+      }
+    }
+    checkActiveTheme() {
+      const themeButtons = this.shadowRoot?.querySelectorAll(".theme-button");
+      if (!themeButtons) {
+        return;
+      }
+      for (const button of Array.from(themeButtons)) {
+        const theme = button.getAttribute("data-theme");
+        const icon = button.querySelector(".theme-selected-container");
+        if (!icon) {
+          return;
+        }
+        if (theme === this.currentTheme) {
+          icon.classList.add("active");
+        } else {
+          icon.classList.remove("active");
+        }
+      }
+    }
+    async handleLanguage(event) {
+      const newIndex = event.detail.value;
+      const newLocale = allLocales[newIndex];
+      if (newLocale !== this.currentLocale) {
+        this.currentLocale = newLocale;
+        await setUserLanguage(this.currentLocale);
+      }
     }
     render() {
       return x`
-      <dm-headline>SETTINGS</dm-headline>
+      <dm-headline>${msg("SETTINGS")}:</dm-headline>
+
+      <div class="content">
+        <div class="settings-container">
+          <label for="theme">${msg("Appearance")}</label>
+
+          <select name="theme" id="theme">
+            <option @click="${this.handleTheming}" value="dark">${msg("Dark")}</option>
+            <option @click="${this.handleTheming}" value="light">${msg("Light")}</option>
+          </select>
+        </div>
+
+        <div class="settings-container">
+          <label for="language">${msg("Language")}</label>
+
+          <select name="language" id="language">
+            ${allLocales.toReversed().map(
+        (locale, index) => x`
+                <option @click="${this.handleLanguage}" value="${allLocales[index]}">${this.localeNames[locale]}</option>
+              `
+      )}
+            <!-- <option @click="${this.handleLanguage}" value="en">${msg("English")}</option>
+            <option @click="${this.handleLanguage}" value="de">${msg("German")}</option> -->
+          </select>
+        </div>
+
+      </div>
     `;
     }
   };
+  __decorateClass([
+    r5()
+  ], Settings.prototype, "currentTheme", 2);
+  __decorateClass([
+    r5()
+  ], Settings.prototype, "currentLocale", 2);
   customElements.define("dm-settings", Settings);
 
   // src/content/skills/Languages.ts
@@ -1644,6 +2053,10 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    ul {
+      margin: 0;
     }
   `;
     }
@@ -1682,6 +2095,10 @@
         text-decoration: underline;
       }
     }
+
+    ul {
+      margin: 0;
+    }
   `;
     }
     render() {
@@ -1719,6 +2136,10 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    ul {
+      margin: 0;
     }
   `;
     }

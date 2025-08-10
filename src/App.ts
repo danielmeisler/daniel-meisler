@@ -4,6 +4,7 @@ import { state } from 'lit/decorators.js';
 import type { MenuItem } from './components/Menu.js';
 import { SwitchMenu } from './events/SwitchMenu.js';
 import { SwitchPage } from './events/SwitchPage.js';
+import { initLanguage } from './services/localization.js';
 
 export type MenuType = 'menu' | 'settings' | 'aboutMe' | 'career' | 'skills' | 'blog' | 'contact';
 
@@ -71,6 +72,7 @@ class App extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback();
+		initLanguage();
 		this.addEventListener(SwitchMenu.name, this.#handleMenuSwitch);
 		this.addEventListener(SwitchPage.name, this.#handlePageSwitch);
 	}

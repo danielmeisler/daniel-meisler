@@ -15,6 +15,10 @@ class Other extends LitElement {
         text-decoration: underline;
       }
     }
+
+    ul {
+      margin: 0;
+    }
   `;
 
 	render() {

@@ -5,11 +5,13 @@ class Headline extends LitElement {
 	static styles = css`
     :host {
       --headline-font-size: 40px;
+      --gap-headline-content: 30px;
       --anim-time: calc(var(--steps) * 0.1s);
     }
 
     .container {
       display: inline-block;
+      margin-bottom: var(--gap-headline-content);
     }
 
     h1 {
