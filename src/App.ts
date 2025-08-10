@@ -54,6 +54,7 @@ class App extends LitElement {
 			content: [
 				html`<dm-skills-languages></dm-skills-languages>`,
 				html`<dm-skills-tools></dm-skills-tools>`,
+				html`<dm-skills-other></dm-skills-other>`,
 			],
 		},
 		{

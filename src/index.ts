@@ -14,6 +14,7 @@ import './content/career/Career.js';
 import './content/contact/Contact.js';
 import './content/settings/Settings.js';
 import './content/skills/Languages.js';
+import './content/skills/Other.js';
 import './content/skills/Tools.js';
 
 import './layout/Layout.js';
