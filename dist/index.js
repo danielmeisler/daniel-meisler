@@ -929,6 +929,38 @@
     return false;
   }, "isLanguageValid");
 
+  // src/services/theming.ts
+  var allThemes = ["dark", "light"];
+  var dataTheme = "data-theme";
+  var userDefaultTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  var initTheme = /* @__PURE__ */ __name(() => {
+    const theme = getUserTheming();
+    setUserTheming(theme);
+  }, "initTheme");
+  var getUserTheming = /* @__PURE__ */ __name(() => {
+    const theme = userDefaultTheme[0];
+    if (isThemingValid(theme)) {
+      return theme;
+    }
+    return userDefaultTheme;
+  }, "getUserTheming");
+  var setUserTheming = /* @__PURE__ */ __name((theme) => {
+    if (!isThemingValid(theme)) {
+      return;
+    }
+    document.documentElement.setAttribute(dataTheme, theme);
+    const themeColorElement = document.querySelector('meta[name="theme-color"]');
+    if (themeColorElement) {
+      themeColorElement.setAttribute("content", theme === "dark" ? "#222222" : "#ffffff");
+    }
+  }, "setUserTheming");
+  var isThemingValid = /* @__PURE__ */ __name((value) => {
+    if (allThemes.includes(value)) {
+      return true;
+    }
+    return false;
+  }, "isThemingValid");
+
   // src/App.ts
   var App = class extends i4 {
     constructor() {
@@ -1001,6 +1033,7 @@
     connectedCallback() {
       super.connectedCallback();
       initLanguage();
+      initTheme();
       this.addEventListener(SwitchMenu.name, this.#handleMenuSwitch);
       this.addEventListener(SwitchPage.name, this.#handlePageSwitch);
     }
@@ -1895,25 +1928,6 @@
   };
   customElements.define("dm-contact", Contact);
 
-  // src/services/theming.ts
-  var allThemes = ["dark", "light"];
-  var userDefaultTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  var setUserTheming = /* @__PURE__ */ __name((theme) => {
-    if (!isThemingValid(theme)) {
-      return;
-    }
-    const themeColorElement = document.querySelector('meta[name="theme-color"]');
-    if (themeColorElement) {
-      themeColorElement.setAttribute("content", theme === "dark" ? "#222222" : "#ffffff");
-    }
-  }, "setUserTheming");
-  var isThemingValid = /* @__PURE__ */ __name((value) => {
-    if (allThemes.includes(value)) {
-      return true;
-    }
-    return false;
-  }, "isThemingValid");
-
   // src/content/settings/Settings.ts
   var Settings = class extends i4 {
     constructor() {
@@ -1931,7 +1945,15 @@
     static {
       this.styles = i`
     :host {
-      
+      --content-gap: 20px;
+
+			--select-font-size: 28px;
+			--select-menu-color: var(--read-color);
+			--select-menu-background: var(--background-color);
+
+			--select-border-color: var(--read-color);
+			--select-border-width: 1px;
+			--select-border-padding: 5px;
     }
 
     .content {
@@ -1939,7 +1961,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: var(--content-gap);
     }
     
     .settings-container {
@@ -1951,12 +1973,12 @@
     }
 
     select {
-      background: #222222;
-      font-family: Geo;
-      font-size: 28px;
-      color: white;
-      border: solid 1px white;
-      padding: 5px;
+      background: var(--select-menu-background);
+      font-family: var(--font);
+      font-size: var(--select-font-size);
+      color: var(--select-menu-color);
+      border: solid var(--select-border-width) var(--select-border-color);
+      padding: var(--select-border-padding);
       cursor: pointer;
     }
   `;
@@ -2018,8 +2040,6 @@
                 <option @click="${this.handleLanguage}" value="${allLocales[index]}">${this.localeNames[locale]}</option>
               `
       )}
-            <!-- <option @click="${this.handleLanguage}" value="en">${msg("English")}</option>
-            <option @click="${this.handleLanguage}" value="de">${msg("German")}</option> -->
           </select>
         </div>
 
@@ -2067,7 +2087,7 @@
       <ul>
         <li><a href="https://html.com" class="link" target="_blank" rel="noopener noreferrer">HTML</a> / <a href="https://www.w3.org/Style/CSS/Overview.de.html" class="link" target="_blank" rel="noopener noreferrer">CSS</a></li>
         <li><a href="https://www.javascript.com" class="link" target="_blank" rel="noopener noreferrer">JavaScript</a> / <a href="https://www.typescriptlang.org" class="link" target="_blank" rel="noopener noreferrer">TypeScript</a></li>
-        <li><a href="https://go.dev" class="link" target="_blank" rel="noopener noreferrer">Go / golang</a></li>
+        <li><a href="https://go.dev" class="link" target="_blank" rel="noopener noreferrer">Go</a></li>
         <li><a href="https://www.python.org" class="link" target="_blank" rel="noopener noreferrer">Python</a></li>
         <li><a href="https://www.java.com" class="link" target="_blank" rel="noopener noreferrer">Java</a></li>
       </ul>

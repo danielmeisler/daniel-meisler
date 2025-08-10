@@ -1,4 +1,5 @@
 const allThemes = ['dark', 'light'];
+const dataTheme = 'data-theme';
 
 const userDefaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
 	? 'dark'
@@ -10,7 +11,7 @@ const initTheme = () => {
 };
 
 const getUserTheming = () => {
-	const theme = userDefaultTheme;
+	const theme = userDefaultTheme[0];
 
 	if (isThemingValid(theme)) {
 		return theme;
@@ -24,6 +25,7 @@ const setUserTheming = (theme: string) => {
 		return;
 	}
 
+	document.documentElement.setAttribute(dataTheme, theme);
 	const themeColorElement = document.querySelector('meta[name="theme-color"]');
 
 	if (themeColorElement) {

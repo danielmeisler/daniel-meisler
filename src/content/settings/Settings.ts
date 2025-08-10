@@ -8,7 +8,15 @@ import { allThemes, setUserTheming } from '../../services/theming.js';
 class Settings extends LitElement {
 	static styles = css`
     :host {
-      
+      --content-gap: 20px;
+
+			--select-font-size: 28px;
+			--select-menu-color: var(--read-color);
+			--select-menu-background: var(--background-color);
+
+			--select-border-color: var(--read-color);
+			--select-border-width: 1px;
+			--select-border-padding: 5px;
     }
 
     .content {
@@ -16,7 +24,7 @@ class Settings extends LitElement {
       height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: var(--content-gap);
     }
     
     .settings-container {
@@ -28,12 +36,12 @@ class Settings extends LitElement {
     }
 
     select {
-      background: #222222;
-      font-family: Geo;
-      font-size: 28px;
-      color: white;
-      border: solid 1px white;
-      padding: 5px;
+      background: var(--select-menu-background);
+      font-family: var(--font);
+      font-size: var(--select-font-size);
+      color: var(--select-menu-color);
+      border: solid var(--select-border-width) var(--select-border-color);
+      padding: var(--select-border-padding);
       cursor: pointer;
     }
   `;
@@ -115,8 +123,6 @@ class Settings extends LitElement {
                 <option @click="${this.handleLanguage}" value="${allLocales[index]}">${this.localeNames[locale]}</option>
               `,
 						)}
-            <!-- <option @click="${this.handleLanguage}" value="en">${msg('English')}</option>
-            <option @click="${this.handleLanguage}" value="de">${msg('German')}</option> -->
           </select>
         </div>
 

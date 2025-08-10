@@ -5,13 +5,19 @@
 }
 
 :root {
-	--background-color: #222222;
-
 	--font: Geo, system-ui, Arial, sans-serif;
-	--read-color: #ffffff;
-
 	--title-font-size: 48px;
 	--text-font-size: 32px;
+}
+
+:root[data-theme="dark"] {
+	--read-color: #ffffff;
+	--background-color: #222222;
+}
+
+:root[data-theme="light"] {
+	--read-color: #222222;
+	--background-color: #ffffff;
 }
 
 body {
