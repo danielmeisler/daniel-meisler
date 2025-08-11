@@ -6,7 +6,7 @@ class Panel extends LitElement {
       --panel-size: 600px;
       --panel-padding: 5%;
       --border-size: 5px;
-      --border-color: #ffffff;
+      --border-color: var(--read-color);
     }
 
     .panel-container {

@@ -5,22 +5,52 @@ import { state } from 'lit/decorators.js';
 class AboutMe extends LitElement {
 	static styles = css`
     :host {
-      --image-padding: 30px;
       --image-size: 200px;
+      --border-size: 3px;
+      --border-color: var(--read-color);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .speech-bubble-container {
+      height: 200px;
+      width: 300px;
+
+      .text {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .title {
+        font-size: 60px;
+        font-weight: 600;
+      }
+
+      .description {
+        text-align: center;
+      }
     }
 
     .content {
       height: 100%;
       width: 100%;
       position: relative;
+      border: solid var(--border-size) var(--border-color);
+      margin-top: 30px;
+      box-sizing: border-box;
+      padding: 3%;
     }
 
     .image {
       height: var(--image-size);
       aspect-ratio: 1 / 1;
-      position: absolute;
-      top: var(--image-padding);
-      right: var(--image-padding);
 
       img {
         height: 100%;
@@ -30,7 +60,6 @@ class AboutMe extends LitElement {
         transition: transform 0.5s ease-in-out;
 
         &:hover {
-          content: 'TEST';
           transform: scale(1.1);
         }
       }
@@ -65,12 +94,27 @@ class AboutMe extends LitElement {
 
 	render() {
 		return html`
-      <dm-headline>${msg(`Heyho, I'm Daniel!`)}</dm-headline>
-      <div class="image">
-        <img @click="${this.getNewImage}" src="${this.imageUrl}">
+      <div class="header">
+        <div class="speech-bubble-container">
+          <dm-speech-bubble>
+            <div class="text">
+              <div class="title">
+                ${msg('Heyho!')}
+              </div>
+              <div class="description">
+                <div>${msg(`I'm Daniel,`)}</div>
+                <div>${msg('nice to meet you.')}</div>
+              </div>  
+            </div>
+          </dm-speech-bubble>
+        </div>
+        <div class="image">
+          <img @click="${this.getNewImage}" src="${this.imageUrl}">
+        </div>
       </div>
       <dm-content>
         <div class="content">
+Test
         </div>
       </dm-content>
     `;

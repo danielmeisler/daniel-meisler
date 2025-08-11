@@ -9,6 +9,7 @@ import './components/Menu.js';
 import './components/PageControls.js';
 import './components/Panel.js';
 import './components/Socials.js';
+import './components/SpeechBubble.js';
 
 import './content/aboutMe/AboutMe.js';
 import './content/blog/Blog.js';
