@@ -12,11 +12,15 @@
 
 :root[data-theme="dark"] {
 	--read-color: #ffffff;
+	--read-secondary-color: #acacac;
+	--read-tertiary-color: #808080;
 	--background-color: #222222;
 }
 
 :root[data-theme="light"] {
 	--read-color: #222222;
+	--read-sub-color: #808080;
+	--read-tertiary-color: #acacac;
 	--background-color: #ffffff;
 }
 
