@@ -74,6 +74,170 @@
   <source>Appearance</source>
   <target>Aussehen</target>
 </trans-unit>
+<trans-unit id="s800ada8267779033">
+  <source>Heyho!</source>
+  <target>Heyho!</target>
+</trans-unit>
+<trans-unit id="sd190a607ae22b84d">
+  <source>I'm Daniel,</source>
+  <target>Ich bin Daniel,</target>
+</trans-unit>
+<trans-unit id="sa0c2e159e29f5d87">
+  <source>nice to meet you.</source>
+  <target>sieh dich ruhig um.</target>
+</trans-unit>
+<trans-unit id="scf2953a2cc48ce72">
+  <source>Informations</source>
+  <target>Informationen</target>
+</trans-unit>
+<trans-unit id="se715b4190539215c">
+  <source>age</source>
+  <target>alter</target>
+</trans-unit>
+<trans-unit id="s72570106ac916dbe">
+  <source>birth date</source>
+  <target>geburtsdatum</target>
+</trans-unit>
+<trans-unit id="s987ca89c61074225">
+  <source>birth place</source>
+  <target>geburtsort</target>
+</trans-unit>
+<trans-unit id="sd65ee93222237fa9">
+  <source>nationality</source>
+  <target>nationalität</target>
+</trans-unit>
+<trans-unit id="s24f94a11dfae0fb3">
+  <source>german</source>
+  <target>deutsch</target>
+</trans-unit>
+<trans-unit id="s265f8bb66f83b46d">
+  <source>domicile</source>
+  <target>wohnort</target>
+</trans-unit>
+<trans-unit id="s42b68a1842b8ae58">
+  <source>Languages</source>
+  <target>Sprachen</target>
+</trans-unit>
+<trans-unit id="s42f35a679c98729c">
+  <source>Native language</source>
+  <target>Muttersprache</target>
+</trans-unit>
+<trans-unit id="sa30c12014e955946">
+  <source>Russian</source>
+  <target>Russisch</target>
+</trans-unit>
+<trans-unit id="s83536a316c5edabb">
+  <source>Fluent</source>
+  <target>Fließend</target>
+</trans-unit>
+<trans-unit id="sf1868dc19e3917bb">
+  <source>Spanish</source>
+  <target>Spanisch</target>
+</trans-unit>
+<trans-unit id="s15b6305e863792ea">
+  <source>Basics</source>
+  <target>Grundkenntnisse</target>
+</trans-unit>
+<trans-unit id="s637948e0d096824f">
+  <source>Hobbies</source>
+  <target>Hobbys</target>
+</trans-unit>
+<trans-unit id="sc373af4c1a974b57">
+  <source>Cooking</source>
+  <target>Kochen</target>
+</trans-unit>
+<trans-unit id="s337d7dabeb47f8c5">
+  <source>Drawing</source>
+  <target>Zeichnen</target>
+</trans-unit>
+<trans-unit id="scdc79bc316ae2454">
+  <source>Electric guitar</source>
+  <target>E-Gitarre</target>
+</trans-unit>
+<trans-unit id="sed0b0f702939c990">
+  <source>Gaming</source>
+  <target>Zocken</target>
+</trans-unit>
+<trans-unit id="s735f391cb964c62e">
+  <source>Professional Experience</source>
+  <target>Berufliche Erfahrungen</target>
+</trans-unit>
+<trans-unit id="sa411597d0674521e">
+  <source>today</source>
+  <target>heute</target>
+</trans-unit>
+<trans-unit id="s2021194ae9e487ec">
+  <source>Web and cloud software developer</source>
+  <target>Softwareentwickler Web und Cloud</target>
+</trans-unit>
+<trans-unit id="sd83b6936d42a87e8">
+  <source>Development of web applications</source>
+  <target>Entwicklung von Webanwendungen</target>
+</trans-unit>
+<trans-unit id="saf78b003779b4af6">
+  <source>Development of scalable microservices</source>
+  <target>Entwicklung skalierbarer Microservices</target>
+</trans-unit>
+<trans-unit id="s7397f10c9043555b">
+  <source>Working student</source>
+  <target>Werkstudent</target>
+</trans-unit>
+<trans-unit id="sc1665e63bf89a3c7">
+  <source>Internship semester</source>
+  <target>Praxissemester</target>
+</trans-unit>
+<trans-unit id="s0fa29ef3999792d4">
+  <source>Educational Background</source>
+  <target>Schulischer Werdegang</target>
+</trans-unit>
+<trans-unit id="s1e9f65eb50a61fbd">
+  <source>Computer Science in Media</source>
+  <target>Medieninformatik</target>
+</trans-unit>
+<trans-unit id="s7f6c54270afe0f0a">
+  <source>Furtwangen University</source>
+  <target>Hochschule Furtwangen</target>
+</trans-unit>
+<trans-unit id="sb9749fa79c0992e6">
+  <source>Bachelor of Science</source>
+  <target>Bachelor of Science</target>
+</trans-unit>
+<trans-unit id="s2fee64302c226f9c">
+  <source>Major in Computer Science</source>
+  <target>Profilfach Informatik</target>
+</trans-unit>
+<trans-unit id="sea8b866c8a2a8a81">
+  <source>General higher education entrance qualification (Abitur)</source>
+  <target>Hochschulabschluss (Abitur)</target>
+</trans-unit>
+<trans-unit id="sfd27b493a4550bbc">
+  <source>Elementary and secondary school</source>
+  <target>Grund- und Realschule</target>
+</trans-unit>
+<trans-unit id="s79be97ab3db44ee9">
+  <source>General Certificate of Secondary Education</source>
+  <target>Realschulabschluss</target>
+</trans-unit>
+<trans-unit id="s87bae2710b2492c3">
+  <source>Contact</source>
+  <target>Kontakt</target>
+</trans-unit>
+<trans-unit id="sc54154558c5254b4">
+  <source>You can contact me via mail at </source>
+  <target>Schreib mich unter dieser Mail an </target>
+</trans-unit>
+<trans-unit id="s96a6709e139831ab">
+  <source>You can check out my instagram at </source>
+  <target>Check mein Instagram ab </target>
+</trans-unit>
+<trans-unit id="sc59aefacceae8400">
+  <source>You can see my projects on my github at </source>
+  <target>Hier findest du meine Projekte </target>
+</trans-unit>
+<trans-unit id="s343f9cd20de8f67a">
+  <source>You can see my LinkedIn at </source>
+  <target>Mein LinkedIn findest du hier </target>
+</trans-unit>
 </body>
 </file>
 </xliff>
