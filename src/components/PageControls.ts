@@ -6,8 +6,9 @@ import { SwitchPage } from '../events/SwitchPage.js';
 class PageControls extends LitElement {
 	static styles = css`
     :host {
-      --font-size: 24px;
+			--button-color: var(--read-color);
       --button-size: 26px;
+      --font-size: 24px;
       --gap-arrows-text: 20px;
       --anim-shift: 20%;
       --anim-time: 0.5s;
@@ -35,7 +36,7 @@ class PageControls extends LitElement {
       .left-icon {
         height: 100%;
         width: 100%;
-        fill: white;
+        fill: var(--button-color);
       }
 
       &:hover {
@@ -54,7 +55,7 @@ class PageControls extends LitElement {
       .right-icon {
         height: 100%;
         width: 100%;
-        fill: white;
+        fill: var(--button-color);
       }
 
       &:hover {

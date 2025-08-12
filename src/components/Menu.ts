@@ -1,3 +1,4 @@
+import { localized } from '@lit/localize';
 import { LitElement, type TemplateResult, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import type { MenuType } from '../App.js';
@@ -9,6 +10,7 @@ export interface MenuItem {
 	content: TemplateResult | TemplateResult[];
 }
 
+@localized()
 class Menu extends LitElement {
 	static styles = css`
     :host {

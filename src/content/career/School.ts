@@ -1,6 +1,7 @@
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 
+@localized()
 class School extends LitElement {
 	static styles = css`
     :host {
@@ -43,7 +44,7 @@ class School extends LitElement {
 	render() {
 		return html`
       <div class="container">
-        <dm-headline>${msg('Educational Background')}</dm-headline>
+        <dm-headline>${msg('Educational Background')}:</dm-headline>
         <dm-content>
           <div class="content">
             <dm-career-section mode="left">

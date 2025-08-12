@@ -1,6 +1,7 @@
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 
+@localized()
 class Blog extends LitElement {
 	static styles = css`
     :host {
@@ -49,10 +50,10 @@ class Blog extends LitElement {
       left: 0;
       top: 0;
 
-      &.background-svg {
+      .background-svg {
         width: 100%;
         height: 100%;
-        background-color: var(--svg-color);
+        fill: var(--svg-color);
       }
     }
 
@@ -72,7 +73,6 @@ class Blog extends LitElement {
 
       <div class="background">
         <svg class="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600.16 599.89">
-          <defs><style>.cls-1{fill:#fff;stroke-width:0px;}</style></defs>
           <polygon class="cls-1" points="52.24 599.89 27.24 599.89 56.74 549.89 81.74 549.89 52.24 599.89"/>
           <polygon class="cls-1" points="106.74 599.89 81.74 599.89 111.24 549.89 136.24 549.89 106.74 599.89"/>
           <polygon class="cls-1" points="161.24 599.89 136.24 599.89 165.74 549.89 190.74 549.89 161.24 599.89"/>

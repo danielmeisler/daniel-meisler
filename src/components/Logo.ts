@@ -5,7 +5,8 @@ class Logo extends LitElement {
     :host {
       --gap-logo-text: 130%;
       --text-font-size: 42px;
-      --text-color: #ffffff;
+      --text-color: var(--read-color);
+      --logo-color: var(--read-color);
       --scale-multiplier: 1.2;
       --animation-time: 0.1s;
     }
@@ -48,12 +49,22 @@ class Logo extends LitElement {
         transform: scale(var(--scale-multiplier));
       }
     }
+
+    .icon {
+      height: 100%;
+      width: 100%;
+      fill: var(--logo-color);
+    }
   `;
 
 	render() {
 		return html`
       <div class="logo-container">
-        <img class="logo-image" src="./assets/app/logo.svg">
+        <div class="logo-image">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <path class="cls-1" d="M95,0h0s-44.99,45-44.99,45h-.02L5,0h0s-5,0-5,0v50h0v25.33h0C0,88.95,22.39,100,50,100s50-11.05,50-24.67h0V0h-5ZM5,7.08l37.92,37.92H5V7.08ZM95,75.33h0c-.07,10.53-20.18,19.06-44.99,19.06S5.07,85.86,5.01,75.33h0v-25.33h90v25.33ZM57.08,45L95,7.08v37.92h-37.92Z"/>
+          </svg>
+        </div>
       </div>
     `;
 	}

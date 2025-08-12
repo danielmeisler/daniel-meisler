@@ -19,9 +19,9 @@
 
 :root[data-theme="light"] {
 	--read-color: #222222;
-	--read-sub-color: #808080;
+	--read-secondary-color: #808080;
 	--read-tertiary-color: #acacac;
-	--background-color: #ffffff;
+	--background-color: #eff1ff;
 }
 
 body {

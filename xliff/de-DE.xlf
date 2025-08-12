@@ -106,10 +106,6 @@
   <source>nationality</source>
   <target>nationalität</target>
 </trans-unit>
-<trans-unit id="s24f94a11dfae0fb3">
-  <source>german</source>
-  <target>deutsch</target>
-</trans-unit>
 <trans-unit id="s265f8bb66f83b46d">
   <source>domicile</source>
   <target>wohnort</target>
@@ -222,21 +218,21 @@
   <source>Contact</source>
   <target>Kontakt</target>
 </trans-unit>
-<trans-unit id="sc54154558c5254b4">
-  <source>You can contact me via mail at </source>
-  <target>Schreib mich unter dieser Mail an </target>
+<trans-unit id="s650203c7ecc4fc8f">
+  <source>Check out my Instagram</source>
+  <target>Check mein Instagram ab</target>
 </trans-unit>
-<trans-unit id="s96a6709e139831ab">
-  <source>You can check out my instagram at </source>
-  <target>Check mein Instagram ab </target>
+<trans-unit id="sbced705cbdc227fa">
+  <source>Find my projects on GitHub</source>
+  <target>Finde meine Projekte auf GitHub</target>
 </trans-unit>
-<trans-unit id="sc59aefacceae8400">
-  <source>You can see my projects on my github at </source>
-  <target>Hier findest du meine Projekte </target>
+<trans-unit id="s15c2c82fa8d25c9f">
+  <source>Discover my LinkedIn profile</source>
+  <target>Entdecke mein LinkedIn Profil</target>
 </trans-unit>
-<trans-unit id="s343f9cd20de8f67a">
-  <source>You can see my LinkedIn at </source>
-  <target>Mein LinkedIn findest du hier </target>
+<trans-unit id="s7ec76a50d96ec416">
+  <source>Contact me via mail</source>
+  <target>Kontaktiere mich per Mail</target>
 </trans-unit>
 </body>
 </file>

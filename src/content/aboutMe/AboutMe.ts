@@ -1,16 +1,42 @@
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 import { state } from 'lit/decorators.js';
 import { getUserLanguage } from '../../services/localization.js';
 
+@localized()
 class AboutMe extends LitElement {
 	static styles = css`
+    :host {
+      --gap-content: 30px;
+
+      --speech-bubble-color: var(--background-color);
+      --speech-bubble-height: 200px;
+      --speech-bubble-width: 300px;
+      --speech-bubble-font-size: 60px;
+
+      --image-size: 200px;
+      --image-scale: 1.1;
+      --image-grayscale: 1;
+
+      --image-text-color: #ffffff;
+      --image-font-size: 30px;
+      --image-anim-time: 0.5s;
+
+      --border-color: var(--read-color);
+
+      --table-color: var(--read-color);
+      --table-secondary-color: var(--read-secondary-color);
+      --table-title-font-size: 24px;
+      --table-text-font-size: 20px;
+      --gap-tables: 20px;
+    }
+
     .container {
       height: 100%;
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: var(--gap-content);
     }
 
     .header {
@@ -19,8 +45,8 @@ class AboutMe extends LitElement {
     }
 
     .speech-bubble-container {
-      height: 200px;
-      width: 300px;
+      height: var(--speech-bubble-height);
+      width: var(--speech-bubble-width);
 
       .text {
         height: 100%;
@@ -29,10 +55,12 @@ class AboutMe extends LitElement {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: var(--speech-bubble-color);
       }
 
       .title {
-        font-size: 60px;
+        font-size: var(--speech-bubble-font-size);
+        color: var(--speech-bubble-color);
         font-weight: 600;
       }
 
@@ -42,7 +70,7 @@ class AboutMe extends LitElement {
     }
 
     .image {
-      height: 200px;
+      height: var(--image-size);
       aspect-ratio: 1 / 1;
       position: relative;
 
@@ -52,11 +80,11 @@ class AboutMe extends LitElement {
         position: relative;
         cursor: pointer;
         transform: scale(1);
-        transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+        transition: transform var(--image-anim-time) ease-in-out, filter var(--image-anim-time) ease-in-out;
 
         &:hover {
-          transform: scale(1.1);
-          filter: grayscale(1);
+          transform: scale(var(--image-scale));
+          filter: grayscale(var(--image-grayscale));
         }
       }
 
@@ -65,9 +93,9 @@ class AboutMe extends LitElement {
         position: absolute;
         top: 50%;
         left: 50%;
-        font-size: 30px;
+        font-size: var(--image-font-size);
         text-align: center;
-        color: white;
+        color: var(--image-text-color);
         transform: translate(-50%, -50%);
         pointer-events: none;
         white-space: nowrap;
@@ -75,15 +103,15 @@ class AboutMe extends LitElement {
     }
 
     .table-title {
-      font-size: 24px;
+      font-size: var(--table-title-font-size);
       font-weight: 600;
     }
 
     .info-content {
-      height: fit-content;
       width: 100%;
+      height: fit-content;
       position: relative;
-      border: solid 3px var(--read-color);
+      border: solid var(--border-size) var(--border-color);
       box-sizing: border-box;
       padding: 3%;
       display: flex;
@@ -93,13 +121,13 @@ class AboutMe extends LitElement {
     .table-container {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      gap: var(--gap-tables);
     }
 
     .info-table {
 			width: 50%;
       height: 50%;
-      font-size: 20px;
+      font-size: var(--table-text-font-size);
 		}
 
 		tr {
@@ -113,7 +141,7 @@ class AboutMe extends LitElement {
     }
 
     td {
-      color: var(--read-secondary-color);
+      color: var(--table-secondary-color);
     }
 
     .bottom-wrapper {
@@ -136,6 +164,7 @@ class AboutMe extends LitElement {
     }
 
     .hobbies-content {
+      width: 50%;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -144,20 +173,19 @@ class AboutMe extends LitElement {
       box-sizing: border-box;
       padding: 3%;
       border-left: none;
-      width: 50%;
     }
 
     .language-table {
-      font-size: 20px;
+      font-size: var(--table-text-font-size);
 		}
 
     .hobbies-list {
-      font-size: 20px;
+      font-size: var(--table-text-font-size);
       margin: 0;
     }
 
     li {
-      color: var(--read-secondary-color);
+      color: var(--table-secondary-color);
     }
   `;
 
@@ -253,7 +281,7 @@ class AboutMe extends LitElement {
                 <tbody>
                   <tr>
                     <th scope="row">${msg('nationality')}:</th>
-                    <td>${msg('german')}</td>
+                    <td>${msg('German')}</td>
                   </tr>
                   <tr>
                     <th scope="row">${msg('domicile')}:</th>

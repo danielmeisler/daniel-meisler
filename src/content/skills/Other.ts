@@ -1,6 +1,7 @@
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 
+@localized()
 class Other extends LitElement {
 	static styles = css`
     :host {

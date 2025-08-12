@@ -11,10 +11,14 @@ const initTheme = () => {
 };
 
 const getUserTheming = () => {
-	const theme = userDefaultTheme[0];
+	const attrTheme = document.documentElement.getAttribute(dataTheme);
 
-	if (isThemingValid(theme)) {
-		return theme;
+	if (attrTheme && isThemingValid(attrTheme)) {
+		return attrTheme;
+	}
+
+	if (isThemingValid(userDefaultTheme[0])) {
+		return userDefaultTheme[0];
 	}
 
 	return userDefaultTheme;
@@ -29,7 +33,7 @@ const setUserTheming = (theme: string) => {
 	const themeColorElement = document.querySelector('meta[name="theme-color"]');
 
 	if (themeColorElement) {
-		themeColorElement.setAttribute('content', theme === 'dark' ? '#222222' : '#ffffff');
+		themeColorElement.setAttribute('content', theme === 'dark' ? '#222222' : '#eff1ff');
 	}
 };
 

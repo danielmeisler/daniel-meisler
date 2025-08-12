@@ -29,7 +29,7 @@ const getUserLanguage = () => {
 const setUserLanguage = async (locale: string) => {
 	if (isLanguageValid(locale)) {
 		currentLanguage = locale;
-		await setLocale(locale);
+		await setLocale(currentLanguage);
 	}
 };
 

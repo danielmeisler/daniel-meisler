@@ -4,6 +4,7 @@ import { SwitchMenu } from '../events/SwitchMenu.js';
 class BackButton extends LitElement {
 	static styles = css`
     :host {
+      --button-color: var(--read-color);
       --button-size: 30px;
       --gap-arrows-text: 20px;
       --anim-shift: -20%;
@@ -21,7 +22,7 @@ class BackButton extends LitElement {
       .back-icon {
         height: 100%;
         width: 100%;
-        fill: white;
+        fill: var(--button-color);
       }
 
       &:hover {

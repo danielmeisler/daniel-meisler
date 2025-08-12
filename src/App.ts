@@ -1,4 +1,4 @@
-import { msg } from '@lit/localize';
+import { localized, msg } from '@lit/localize';
 import { LitElement, css, html } from 'lit';
 import { state } from 'lit/decorators.js';
 import type { MenuItem } from './components/Menu.js';
@@ -9,6 +9,7 @@ import { initTheme } from './services/theming.js';
 
 export type MenuType = 'menu' | 'settings' | 'aboutMe' | 'career' | 'skills' | 'blog' | 'contact';
 
+@localized()
 class App extends LitElement {
 	static styles = css`
 		.content {
@@ -39,37 +40,39 @@ class App extends LitElement {
 	#handleMenuSwitch = this.handleMenuSwitch.bind(this) as EventListener;
 	#handlePageSwitch = this.handlePageSwitch.bind(this) as EventListener;
 
-	menuItems: MenuItem[] = [
-		{
-			name: 'aboutMe',
-			label: msg('about me'),
-			content: html`<dm-about-me></dm-about-me>`,
-		},
-		{
-			name: 'career',
-			label: msg('career'),
-			content: [html`<dm-career></dm-career>`, html`<dm-school></dm-school>`],
-		},
-		{
-			name: 'skills',
-			label: msg('skills'),
-			content: [
-				html`<dm-skills-languages></dm-skills-languages>`,
-				html`<dm-skills-tools></dm-skills-tools>`,
-				html`<dm-skills-other></dm-skills-other>`,
-			],
-		},
-		{
-			name: 'blog',
-			label: msg('blog'),
-			content: html`<dm-blog></dm-blog>`,
-		},
-		{
-			name: 'contact',
-			label: msg('contact'),
-			content: html`<dm-contact></dm-contact>`,
-		},
-	];
+	get menuItems(): MenuItem[] {
+		return [
+			{
+				name: 'aboutMe',
+				label: msg('about me'),
+				content: html`<dm-about-me></dm-about-me>`,
+			},
+			{
+				name: 'career',
+				label: msg('career'),
+				content: [html`<dm-career></dm-career>`, html`<dm-school></dm-school>`],
+			},
+			{
+				name: 'skills',
+				label: msg('skills'),
+				content: [
+					html`<dm-skills-languages></dm-skills-languages>`,
+					html`<dm-skills-tools></dm-skills-tools>`,
+					html`<dm-skills-other></dm-skills-other>`,
+				],
+			},
+			{
+				name: 'blog',
+				label: msg('blog'),
+				content: html`<dm-blog></dm-blog>`,
+			},
+			{
+				name: 'contact',
+				label: msg('contact'),
+				content: html`<dm-contact></dm-contact>`,
+			},
+		];
+	}
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -97,7 +100,7 @@ class App extends LitElement {
 		if (this.currentMenu === 'menu') {
 			this.currentPage = 1;
 			return html`
-					<dm-menu .items=${this.menuItems}></dm-menu></dm-menu>
+					<dm-menu .items=${this.menuItems}></dm-menu>
 				`;
 		}
 

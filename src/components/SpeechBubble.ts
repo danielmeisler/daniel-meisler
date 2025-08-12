@@ -5,19 +5,16 @@ class SpeechBubble extends LitElement {
     :host {
       --panel-padding: 5%;
       --border-size: 3px;
-      --border-color: #ffffff;
-      --speech-bubble-color: var(--read-color);
-      --text-color: var(--background-color);
+      --background-color: var(--read-color);
     }
 
     .container {
       height: 100%;
       width: 100%;
-      background-color: var(--speech-bubble-color);
+      background-color: var(--background-color);
       padding: var(--panel-padding);
       box-sizing: border-box;
       position: relative;
-      color: var(--text-color);
 
       &::after {
         content: '';
@@ -27,7 +24,7 @@ class SpeechBubble extends LitElement {
         width: 0;
         height: 0;
         border: 20px solid transparent;
-        border-left-color: var(--speech-bubble-color);
+        border-left-color: var(--background-color);
         border-right: 0;
         margin-top: -20px;
         margin-right: -20px;
