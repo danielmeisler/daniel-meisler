@@ -12,6 +12,7 @@ class BackButton extends LitElement {
     }
 
     .back-button {
+      display: flex;
       height: var(--button-size);
       aspect-ratio: 1 / 1;
       padding: 0;

@@ -66,26 +66,23 @@ class Blog extends LitElement {
         --description-font-size: 26px;
       }
 
+      .container {
+        height: 82vw;
+      }
+
       .menu-container {
         padding: 50px 0;
       }
-
-      .text {
-        margin-top: 15%;
-      }
+    }
   `;
 
 	render() {
 		return html`
       <div class="container">
-
-        <dm-content>
-
           <div class="text">
             <div class="text-title">${msg('Blog')}</div>
             <div class="text-description">${msg('under construction')}</div>
           </div>
-
           <div class="background">
             <svg class="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600.16 599.89">
               <polygon class="cls-1" points="52.24 599.89 27.24 599.89 56.74 549.89 81.74 549.89 52.24 599.89"/>
@@ -114,8 +111,6 @@ class Blog extends LitElement {
               <polygon class="cls-1" points="600.16 0 600.13 0 570.63 50 595.63 50 600.16 42.33 600.16 0"/>
             </svg>
           </div>
-
-        </dm-content>
       </div>
     `;
 	}

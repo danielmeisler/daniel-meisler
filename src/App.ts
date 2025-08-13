@@ -41,6 +41,7 @@ class App extends LitElement {
 			.controls {
 				display: flex;
 				justify-content: space-between;
+				margin-bottom: 5px;
 			}
 
 			dm-back-button {
@@ -146,7 +147,7 @@ class App extends LitElement {
 			<dm-layout>
 				<div class="content">
 					<div class="controls">
-						${this.currentMenu !== 'menu' ? html`<dm-back-button></dm-back-button>` : ''}
+						<dm-back-button style="visibility: ${this.currentMenu === 'menu' ? 'hidden' : 'visible'}"></dm-back-button>
 						<dm-socials></dm-socials>
 					</div>
 					<dm-panel>

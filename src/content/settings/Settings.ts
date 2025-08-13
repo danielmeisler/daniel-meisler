@@ -19,14 +19,6 @@ class Settings extends LitElement {
 			--select-border-width: 1px;
 			--select-border-padding: 5px;
     }
-
-    .content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: var(--content-gap);
-    }
     
     .settings-container {
       width: 100%;
@@ -34,6 +26,7 @@ class Settings extends LitElement {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      margin-bottom: var(--content-gap);
     }
 
     select {
@@ -81,7 +74,7 @@ class Settings extends LitElement {
 		return html`
       <dm-headline>${msg('SETTINGS')}:</dm-headline>
 
-      <div class="content">
+      <dm-content>
         <div class="settings-container">
           <label for="theme">${msg('Appearance')}</label>
 
@@ -104,7 +97,7 @@ class Settings extends LitElement {
           </select>
         </div>
 
-      </div>
+      </dm-content>
     `;
 	}
 }

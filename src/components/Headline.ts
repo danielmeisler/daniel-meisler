@@ -4,7 +4,7 @@ import { query, state } from 'lit/decorators.js';
 class Headline extends LitElement {
 	static styles = css`
     :host {
-      --headline-font-size: 40px;
+      --headline-font-size: var(--sub-title-font-size);
       --gap-headline-content: 30px;
       --anim-time: calc(var(--steps) * 0.1s);
     }

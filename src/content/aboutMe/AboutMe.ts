@@ -194,7 +194,6 @@ class AboutMe extends LitElement {
 
     @media screen and (max-width: 600px) {
       :host {
-
         --speech-bubble-height: fit-content;
         --speech-bubble-width: 50%;
         --speech-bubble-font-size: 30px;
@@ -202,10 +201,6 @@ class AboutMe extends LitElement {
 
         --image-size: 40%;
         --image-font-size: 18px;
-
-        --table-title-font-size: 24px;
-        --table-text-font-size: 20px;
-        --gap-tables: 20px;
       }
 
       .header {
@@ -233,6 +228,21 @@ class AboutMe extends LitElement {
 
       .hobbies-content {
         border-left: solid var(--border-size) var(--border-color);
+      }
+
+      .image {
+        img {
+          transition: none;
+
+          &:hover {
+            transform: none;
+            filter: none;
+          }
+        }
+
+        &:hover::after {
+          content: '';
+        }
       }
     }
   `;

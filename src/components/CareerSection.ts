@@ -52,6 +52,15 @@ class CareerSection extends LitElement {
       font-size: var(--content-font-size);
       color: var(--content-font-color);
     }
+
+    @media screen and (max-width: 600px) {
+			:host {
+        --date-font-size: 16px;
+        --title-font-size: 22px;
+        --sub-title-font-size: 22px;
+        --content-font-size: 16px;
+			}
+    }
   `;
 
 	@property() mode: 'left' | 'right' = 'left';

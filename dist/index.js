@@ -1081,7 +1081,7 @@
 			<dm-layout>
 				<div class="content">
 					<div class="controls">
-						${this.currentMenu !== "menu" ? x`<dm-back-button></dm-back-button>` : ""}
+						<dm-back-button style="visibility: ${this.currentMenu === "menu" ? "hidden" : "visible"}"></dm-back-button>
 						<dm-socials></dm-socials>
 					</div>
 					<dm-panel>
@@ -1126,6 +1126,7 @@
 			.controls {
 				display: flex;
 				justify-content: space-between;
+				margin-bottom: 5px;
 			}
 
 			dm-back-button {
@@ -1172,6 +1173,7 @@
     }
 
     .back-button {
+      display: flex;
       height: var(--button-size);
       aspect-ratio: 1 / 1;
       padding: 0;
@@ -1282,6 +1284,15 @@
       font-size: var(--content-font-size);
       color: var(--content-font-color);
     }
+
+    @media screen and (max-width: 600px) {
+			:host {
+        --date-font-size: 16px;
+        --title-font-size: 22px;
+        --sub-title-font-size: 22px;
+        --content-font-size: 16px;
+			}
+    }
   `;
     }
     render() {
@@ -1382,7 +1393,7 @@
     static {
       this.styles = i`
     :host {
-      --headline-font-size: 40px;
+      --headline-font-size: var(--sub-title-font-size);
       --gap-headline-content: 30px;
       --anim-time: calc(var(--steps) * 0.1s);
     }
@@ -2319,7 +2330,6 @@
 
     @media screen and (max-width: 600px) {
       :host {
-
         --speech-bubble-height: fit-content;
         --speech-bubble-width: 50%;
         --speech-bubble-font-size: 30px;
@@ -2327,10 +2337,6 @@
 
         --image-size: 40%;
         --image-font-size: 18px;
-
-        --table-title-font-size: 24px;
-        --table-text-font-size: 20px;
-        --gap-tables: 20px;
       }
 
       .header {
@@ -2359,6 +2365,21 @@
       .hobbies-content {
         border-left: solid var(--border-size) var(--border-color);
       }
+
+      .image {
+        img {
+          transition: none;
+
+          &:hover {
+            transform: none;
+            filter: none;
+          }
+        }
+
+        &:hover::after {
+          content: '';
+        }
+      }
     }
   `;
   __decorateClass([
@@ -2374,14 +2395,10 @@
     render() {
       return x`
       <div class="container">
-
-        <dm-content>
-
           <div class="text">
             <div class="text-title">${msg("Blog")}</div>
             <div class="text-description">${msg("under construction")}</div>
           </div>
-
           <div class="background">
             <svg class="background-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600.16 599.89">
               <polygon class="cls-1" points="52.24 599.89 27.24 599.89 56.74 549.89 81.74 549.89 52.24 599.89"/>
@@ -2410,8 +2427,6 @@
               <polygon class="cls-1" points="600.16 0 600.13 0 570.63 50 595.63 50 600.16 42.33 600.16 0"/>
             </svg>
           </div>
-
-        </dm-content>
       </div>
     `;
     }
@@ -2480,13 +2495,14 @@
         --description-font-size: 26px;
       }
 
+      .container {
+        height: 82vw;
+      }
+
       .menu-container {
         padding: 50px 0;
       }
-
-      .text {
-        margin-top: 15%;
-      }
+    }
   `;
   Blog = __decorateClass([
     localized()
@@ -2749,6 +2765,7 @@
       --icon-color: var(--read-secondary-color);
       --icon-size: 25px;
 
+      --text-font-size: var(--text-font-size);
       --text-color: var(--read-color);
       --link-color: var(--read-secondary-color);
 
@@ -2768,8 +2785,9 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      color: var(--text-color);
       justify-content: space-between;
+      color: var(--text-color);
+      font-size: var(--text-font-size);
     }
 
     .contact-section {
@@ -2844,7 +2862,7 @@
       return x`
       <dm-headline>${msg("SETTINGS")}:</dm-headline>
 
-      <div class="content">
+      <dm-content>
         <div class="settings-container">
           <label for="theme">${msg("Appearance")}</label>
 
@@ -2866,7 +2884,7 @@
           </select>
         </div>
 
-      </div>
+      </dm-content>
     `;
     }
   };
@@ -2883,14 +2901,6 @@
 			--select-border-width: 1px;
 			--select-border-padding: 5px;
     }
-
-    .content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: var(--content-gap);
-    }
     
     .settings-container {
       width: 100%;
@@ -2898,6 +2908,7 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      margin-bottom: var(--content-gap);
     }
 
     select {

@@ -8,6 +8,7 @@ class Contact extends LitElement {
       --icon-color: var(--read-secondary-color);
       --icon-size: 25px;
 
+      --text-font-size: var(--text-font-size);
       --text-color: var(--read-color);
       --link-color: var(--read-secondary-color);
 
@@ -27,8 +28,9 @@ class Contact extends LitElement {
       height: 100%;
       display: flex;
       flex-direction: column;
-      color: var(--text-color);
       justify-content: space-between;
+      color: var(--text-color);
+      font-size: var(--text-font-size);
     }
 
     .contact-section {
