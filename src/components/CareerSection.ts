@@ -53,7 +53,7 @@ class CareerSection extends LitElement {
       color: var(--content-font-color);
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
 			:host {
         --date-font-size: 16px;
         --title-font-size: 22px;

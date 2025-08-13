@@ -33,7 +33,7 @@ class App extends LitElement {
 			margin-top: 10px;
 		}
 
-		@media screen and (max-width: 600px) {
+		@media screen and (max-width: 700px) {
 			.content {
 				flex-direction: column;
 			}

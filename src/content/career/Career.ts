@@ -41,7 +41,7 @@ class Career extends LitElement {
       margin: 0;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
       .content {
         gap: 50px;
       }

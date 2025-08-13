@@ -123,7 +123,7 @@ class PageControls extends LitElement {
 	render() {
 		return html`
 			<div class="page-controls">
-				<button class="left-button" @click="${this.handleLeftClick}">
+				<button class="left-button" @click="${this.handleLeftClick}" aria-label="${msg('Previous page')}">
 					<svg class="left-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60">
 						<rect class="cls-1" x="60" y="20" width="40" height="20"/>
 						<polyline class="cls-1" points="50 60 0 30 50 0"/>
@@ -132,7 +132,7 @@ class PageControls extends LitElement {
 
 				<div class="page-counter">${msg('Page')} ${this.currentPage} / ${this.maxPages}</div>
 
-				<button class="right-button" @click="${this.handleRightClick}">
+				<button class="right-button" @click="${this.handleRightClick}" aria-label="${msg('Next page')}">
 					<svg class="right-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60">
 						<rect class="cls-1" x="0" y="20" width="40" height="20"/>
 						<polyline class="cls-1" points="50 0 100 30 50 60"/>

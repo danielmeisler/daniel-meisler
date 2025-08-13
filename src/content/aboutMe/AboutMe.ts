@@ -192,7 +192,7 @@ class AboutMe extends LitElement {
       color: var(--table-secondary-color);
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
       :host {
         --speech-bubble-height: fit-content;
         --speech-bubble-width: 50%;

@@ -234,6 +234,38 @@
   <source>Contact me via mail</source>
   <target>Kontaktiere mich per Mail</target>
 </trans-unit>
+<trans-unit id="sbd5be3a94d00496b">
+  <source>Return to menu</source>
+  <target>Zurück zum Menü</target>
+</trans-unit>
+<trans-unit id="s5b6a1140834aa043">
+  <source>Previous page</source>
+  <target>Letzte Seite</target>
+</trans-unit>
+<trans-unit id="s542ffff558768ea3">
+  <source>Next page</source>
+  <target>Nächste Seite</target>
+</trans-unit>
+<trans-unit id="sa8c3b80277455232">
+  <source>GitHub</source>
+  <target>GitHub</target>
+</trans-unit>
+<trans-unit id="sf836053b70eadb1f">
+  <source>LinkedIn</source>
+  <target>LinkedIn</target>
+</trans-unit>
+<trans-unit id="sb4e720a672318ddb">
+  <source>Instagram</source>
+  <target>Instagram</target>
+</trans-unit>
+<trans-unit id="s63e457bc703a3030">
+  <source>E-Mail</source>
+  <target>E-Mail</target>
+</trans-unit>
+<trans-unit id="s9d8b8aa2b404c2c8">
+  <source>Settings</source>
+  <target>Einstellungen</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

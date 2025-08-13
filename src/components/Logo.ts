@@ -59,7 +59,7 @@ class Logo extends LitElement {
       fill: var(--logo-color);
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
       :host {
         --logo-size: 80px;
         --text-font-size: 24px;

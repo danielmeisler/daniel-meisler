@@ -60,7 +60,7 @@ class Blog extends LitElement {
       from { height: 0 }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
       :host {
         --title-font-size: 120px;
         --description-font-size: 26px;

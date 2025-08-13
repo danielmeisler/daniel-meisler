@@ -64,7 +64,7 @@ class Menu extends LitElement {
       }
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
       :host {
         --menu-size: var(--title-font-size);
         --gap-items: 20px;

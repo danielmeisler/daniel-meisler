@@ -62,7 +62,7 @@ class Contact extends LitElement {
       }
     }
 
-		@media screen and (max-width: 600px) {
+		@media screen and (max-width: 700px) {
       .contact-container {
         gap: 50px;
       }
