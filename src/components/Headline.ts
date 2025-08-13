@@ -19,9 +19,9 @@ class Headline extends LitElement {
       font-weight: 600;
       margin: 0;
       overflow: hidden;
-      white-space: nowrap;
+
       width: 100%;
-      animation: typing var(--anim-time) steps(var(--steps));
+
     }
 
     @keyframes typing {

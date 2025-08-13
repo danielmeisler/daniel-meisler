@@ -63,6 +63,17 @@ class Menu extends LitElement {
         }
       }
     }
+
+    @media screen and (max-width: 600px) {
+      :host {
+        --menu-size: var(--title-font-size);
+        --gap-items: 20px;
+      }
+
+      .menu-container {
+        padding: 50px 0;
+      }
+    }
   `;
 
 	@property({ type: Array }) items: MenuItem[] = [];

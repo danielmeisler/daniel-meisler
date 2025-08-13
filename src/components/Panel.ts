@@ -22,6 +22,13 @@ class Panel extends LitElement {
       :host {
         --panel-size: 90vw;
       }
+
+      .panel-container {
+        aspect-ratio: unset;
+        width: var(--panel-size);
+        min-height: var(--panel-size);
+        height: fit-content;
+      }
     }
   `;
 

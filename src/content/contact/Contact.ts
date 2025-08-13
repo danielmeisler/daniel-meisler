@@ -59,6 +59,12 @@ class Contact extends LitElement {
         }
       }
     }
+
+		@media screen and (max-width: 600px) {
+      .contact-container {
+        gap: 50px;
+      }
+    }
   `;
 
 	render() {

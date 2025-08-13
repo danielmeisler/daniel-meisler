@@ -13,6 +13,7 @@ class AboutMe extends LitElement {
       --speech-bubble-height: 200px;
       --speech-bubble-width: 300px;
       --speech-bubble-font-size: 60px;
+      --speech-bubble-text-font-size: 32px;
 
       --image-size: 200px;
       --image-scale: 1.1;
@@ -23,6 +24,7 @@ class AboutMe extends LitElement {
       --image-anim-time: 0.5s;
 
       --border-color: var(--read-color);
+      --border-size: 3px;
 
       --table-color: var(--read-color);
       --table-secondary-color: var(--read-secondary-color);
@@ -65,14 +67,16 @@ class AboutMe extends LitElement {
       }
 
       .description {
+        font-size: var(--speech-bubble-text-font-size);
         text-align: center;
       }
     }
 
     .image {
-      height: var(--image-size);
+      width: var(--image-size);
       aspect-ratio: 1 / 1;
       position: relative;
+      display: flex;
 
       img {
         height: 100%;
@@ -186,6 +190,50 @@ class AboutMe extends LitElement {
 
     li {
       color: var(--table-secondary-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      :host {
+
+        --speech-bubble-height: fit-content;
+        --speech-bubble-width: 50%;
+        --speech-bubble-font-size: 30px;
+        --speech-bubble-text-font-size: 24px;
+
+        --image-size: 40%;
+        --image-font-size: 18px;
+
+        --table-title-font-size: 24px;
+        --table-text-font-size: 20px;
+        --gap-tables: 20px;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+      }
+
+      .table-container {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .info-table {
+        width: 100%;
+        height: 100%;
+      }
+
+      .bottom-wrapper {
+        flex-direction: column;
+      }
+
+      .language-content, .hobbies-content {
+        width: 100%;
+      }
+
+      .hobbies-content {
+        border-left: solid var(--border-size) var(--border-color);
+      }
     }
   `;
 

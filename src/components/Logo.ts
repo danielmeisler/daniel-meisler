@@ -3,17 +3,20 @@ import { LitElement, css, html } from 'lit';
 class Logo extends LitElement {
 	static styles = css`
     :host {
+      --logo-size: 100px;
       --gap-logo-text: 130%;
       --text-font-size: 42px;
       --text-color: var(--read-color);
       --logo-color: var(--read-color);
+      --vertical-padding: 50px;
       --scale-multiplier: 1.2;
       --animation-time: 0.1s;
     }
 
     .logo-container {
-      height: 100%;
+      height: var(--logo-size);
       width: 100%;
+      padding: var(--vertical-padding) 0;
       display: flex;
       align-items: center;
       gap: var(--gap-logo-text);
@@ -54,6 +57,13 @@ class Logo extends LitElement {
       height: 100%;
       width: 100%;
       fill: var(--logo-color);
+    }
+
+    @media screen and (max-width: 600px) {
+      :host {
+        --logo-size: 80px;
+        --text-font-size: 24px;
+      }
     }
   `;
 

@@ -40,6 +40,19 @@ class Socials extends LitElement {
       border: none;
       cursor: pointer;
     }
+
+    
+		@media screen and (max-width: 600px) {
+    .socials-container {
+      flex-direction: row;
+    }
+
+    .socials-button {
+      &:hover {
+        transform: translateY(var(--anim-shift));
+      }
+    }
+    }
   `;
 
 	handleSettings() {

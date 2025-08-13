@@ -32,6 +32,33 @@ class App extends LitElement {
 		dm-page-controls {
 			margin-top: 10px;
 		}
+
+		@media screen and (max-width: 600px) {
+			.content {
+				flex-direction: column;
+			}
+
+			.controls {
+				display: flex;
+				justify-content: space-between;
+			}
+
+			dm-back-button {
+				position: relative;
+				right: unset;
+				margin-right: unset;
+			}
+
+			dm-socials {
+				position: relative;
+				left: unset;
+				margin-left: unset;
+			}
+
+			dm-page-controls {
+				margin-bottom: 10px;
+			}
+    }
 	`;
 
 	@state() currentMenu: MenuType = 'menu';
@@ -118,11 +145,13 @@ class App extends LitElement {
 		return html`
 			<dm-layout>
 				<div class="content">
-					${this.currentMenu !== 'menu' ? html`<dm-back-button></dm-back-button>` : ''}
+					<div class="controls">
+						${this.currentMenu !== 'menu' ? html`<dm-back-button></dm-back-button>` : ''}
+						<dm-socials></dm-socials>
+					</div>
 					<dm-panel>
 						${Array.isArray(content) ? content[this.currentPage - 1] : content}
 					</dm-panel>
-					<dm-socials></dm-socials>
 				</div>
 				${Array.isArray(content) ? html`<dm-page-controls current-page="${this.currentPage}" max-pages="${content.length}"></dm-page-controls>` : ''}
 			</dm-layout>

@@ -39,6 +39,12 @@ class School extends LitElement {
     ul {
       margin: 0;
     }
+
+    @media screen and (max-width: 600px) {
+      .content {
+        gap: 50px;
+      }
+    }
   `;
 
 	render() {

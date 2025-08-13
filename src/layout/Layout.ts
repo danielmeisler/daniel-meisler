@@ -8,9 +8,10 @@ class Layout extends LitElement {
       align-items: center;
     }
 
-    dm-logo {
-      height: 100px;
-      margin: 50px 0;
+    @media screen and (max-width: 600px) {
+			.container {
+				padding-bottom: 20px;
+			}
     }
   `;
 
