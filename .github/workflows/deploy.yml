@@ -30,6 +30,8 @@ jobs:
           npm run build
           mkdir deploy
           cp index.html deploy/index.html
+          cp index.css deploy/index.css
+          cp -r assets deploy/assets
           cp -r dist/* deploy/
 
       - name: Upload artifact
