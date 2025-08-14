@@ -2,7 +2,7 @@ name: Deploy danielmeisler to github pages
 
 on:
   push:
-    branches: [ main ] # Change if your branch name is different
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -26,12 +26,16 @@ jobs:
         run: npm ci
 
       - name: Build with esbuild
-        run: npm run build
+        run: |
+          npm run build
+          mkdir deploy
+          cp index.html deploy/index.html
+          cp -r dist/* deploy/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: deploy
 
   deploy:
     environment:
