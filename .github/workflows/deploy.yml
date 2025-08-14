@@ -31,11 +31,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            index.html
-            index.css
-            dist
-            assets
+          path: index.html,index.css,dist,assets
           
 
   deploy:
