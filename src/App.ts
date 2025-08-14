@@ -102,18 +102,36 @@ class App extends LitElement {
 		];
 	}
 
+	#handleKeyDown = this.handleKeyEvents.bind(this);
+
 	connectedCallback() {
 		super.connectedCallback();
 		initLanguage();
 		initTheme();
+		document.addEventListener('keydown', this.#handleKeyDown);
 		this.addEventListener(SwitchMenu.name, this.#handleMenuSwitch);
 		this.addEventListener(SwitchPage.name, this.#handlePageSwitch);
+		this.printConsole();
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
+		document.removeEventListener('keydown', this.#handleKeyDown);
 		this.removeEventListener(SwitchMenu.name, this.#handleMenuSwitch);
 		this.removeEventListener(SwitchPage.name, this.#handlePageSwitch);
+	}
+
+	handleKeyEvents(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			this.currentMenu = 'menu';
+		}
+	}
+
+	printConsole() {
+		// biome-ignore lint/suspicious/noConsoleLog: Easteregg
+		// biome-ignore lint/suspicious/noConsole: Easteregg
+		// biome-ignore lint/complexity/noUselessStringConcat: Easteregg
+		console.log('  /\\_/\\  \n' + ' ( o.o ) \n' + '  > ^ <  \n' + '  Huhu!  ');
 	}
 
 	handleMenuSwitch(event: SwitchMenu) {
