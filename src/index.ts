@@ -8,6 +8,7 @@ import './components/Logo.js';
 import './components/Menu.js';
 import './components/PageControls.js';
 import './components/Panel.js';
+import './components/Party.js';
 import './components/Socials.js';
 import './components/SpeechBubble.js';
 

@@ -16,6 +16,7 @@ class SpeechBubble extends LitElement {
       box-sizing: border-box;
       position: relative;
 
+
       &::after {
         content: '';
         position: absolute;

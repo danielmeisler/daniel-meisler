@@ -64,6 +64,7 @@ class AboutMe extends LitElement {
         font-size: var(--speech-bubble-font-size);
         color: var(--speech-bubble-color);
         font-weight: 600;
+        
       }
 
       .description {
