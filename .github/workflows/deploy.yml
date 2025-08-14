@@ -32,10 +32,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: |
-            index.html
-            index.css
-            assets/
-            dist/
+            ./index.html
+            ./index.css
+            ./assets/
+            ./dist/
 
   deploy:
     environment:
