@@ -1,4 +1,4 @@
-name: Deploy danielmeisler to github pages
+name: Deployment
 
 on:
   push:
@@ -26,18 +26,16 @@ jobs:
         run: npm ci
 
       - name: Build with esbuild
-        run: |
-          npm run build
-          mkdir deploy
-          cp index.html deploy/index.html
-          cp index.css deploy/index.css
-          cp -r assets deploy/assets
-          cp -r dist/* deploy/
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: deploy
+          path: |
+            index.html
+            index.css
+            assets/
+            dist/
 
   deploy:
     environment:
