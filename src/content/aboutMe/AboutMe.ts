@@ -357,19 +357,19 @@ class AboutMe extends LitElement {
               <table class="language-table">
                 <tbody>
                   <tr>
-                    <th scope="row">${msg('German')}:</th>
+                    <th scope="row">${msg('german')}:</th>
                     <td>${msg('Native language')}</td>
                   </tr>
                   <tr>
-                    <th scope="row">${msg('Russian')}:</th>
+                    <th scope="row">${msg('russian')}:</th>
                     <td>${msg('Native language')}</td>
                   </tr>
                   <tr>
-                    <th scope="row">${msg('English')}:</th>
+                    <th scope="row">${msg('english')}:</th>
                     <td>${msg('Fluent')}</td>
                   </tr>
                   <tr>
-                    <th scope="row">${msg('Spanish')}:</th>
+                    <th scope="row">${msg('spanish')}:</th>
                     <td>${msg('Basics')}</td>
                   </tr>
                 </tbody>
@@ -379,10 +379,10 @@ class AboutMe extends LitElement {
             <div class="hobbies-content">
               <div class="table-title">${msg('Hobbies')}:</div>
                 <ul class="hobbies-list">
-                  <li>${msg('Cooking')}</li>
-                  <li>${msg('Drawing')}</li>
-                  <li>${msg('Electric guitar')}</li>
-                  <li>${msg('Gaming')}</li>
+                  <li>${msg('Eating / Cooking')}</li>
+                  <li>${msg('Drawing / Digital Art')}</li>
+                  <li>${msg('Gaming / Board games')}</li>
+                  <li>${msg('Playing electric guitar')}</li>
                 </ul>
             </div>
           </div>

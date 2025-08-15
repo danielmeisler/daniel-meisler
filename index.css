@@ -13,15 +13,15 @@
 
 :root[data-theme="dark"] {
 	--read-color: #ffffff;
-	--read-secondary-color: #acacac;
-	--read-tertiary-color: #808080;
+	--read-secondary-color: #bcbcbc;
+	--read-tertiary-color: #909090;
 	--background-color: #222222;
 }
 
 :root[data-theme="light"] {
 	--read-color: #222222;
-	--read-secondary-color: #808080;
-	--read-tertiary-color: #acacac;
+	--read-secondary-color: #505050;
+	--read-tertiary-color: #7c7c7c;
 	--background-color: #eff1ff;
 }
 

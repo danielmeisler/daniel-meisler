@@ -8,6 +8,7 @@ class Layout extends LitElement {
       align-items: center;
     }
 
+
     @media screen and (max-width: 700px) {
 			.container {
 				padding-bottom: 20px;

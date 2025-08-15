@@ -1,4 +1,5 @@
 import { LitElement, css, html } from 'lit';
+import { getUserTheming, setUserTheming } from '../services/theming.js';
 
 class Party extends LitElement {
 	static styles = css`
@@ -70,6 +71,7 @@ class Party extends LitElement {
 	dancerSwitch = true;
 	mouseX = 0;
 	mouseY = 0;
+	currentTheme = '';
 
 	colors = ['#ff7979', '#686de0', '#badc58', '#f6e58d', '#ffbe76', '#e056fd', '#7ed6df', '#dff9fb'];
 
@@ -173,6 +175,17 @@ class Party extends LitElement {
 		// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 		setInterval(() => (this.dancerSwitch = !this.dancerSwitch), 200);
 		this.startParty();
+		this.setTheming();
+	}
+
+	setTheming() {
+		this.currentTheme = getUserTheming();
+		setUserTheming('dark');
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		setUserTheming(this.currentTheme);
 	}
 
 	render() {
