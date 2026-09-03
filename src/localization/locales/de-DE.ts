@@ -76,5 +76,8 @@
 'sf0e261e04eda82ff': `Aussehen`,
 'sf836053b70eadb1f': `LinkedIn`,
 'sfd27b493a4550bbc': `Grund- und Realschule`,
+'sb8ef55aef4ed070c': `Current Profession`,
+'s517c87d5c1fabfa9': `Webdeveloper`,
+'se92a719771289704': `Next.js, React, TypeScript, SCSS, HTML, Go`,
     };
   

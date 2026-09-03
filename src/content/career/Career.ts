@@ -55,7 +55,7 @@ class Career extends LitElement {
         <dm-content>
           <div class="content">
           <dm-career-section mode="left">
-            <div slot="date">10.2023 - ${msg('today')}</div>
+            <div slot="date">10.2023 - 10.2025</div>
             <div slot="title">${msg('Web and cloud software developer')}</div>
             <div slot="sub-title">
               <a href="https://www.thenativeweb.io/" target="_blank" rel="noopener noreferrer">the native web GmbH</a>

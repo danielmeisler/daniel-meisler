@@ -32,6 +32,8 @@ class Tools extends LitElement {
           <li><a href="https://vite.dev" class="link" target="_blank" rel="noopener noreferrer">Vite</a> / <a href="https://storybook.js.org" class="link" target="_blank" rel="noopener noreferrer">Storybook</a></li>
           <li><a href="https://nodejs.org" class="link" target="_blank" rel="noopener noreferrer">Node.js</a></li>
           <li><a href="https://www.docker.com" class="link" target="_blank" rel="noopener noreferrer">Docker</a></li>
+          <li><a href="https://www.mysql.com" class="link" target="_blank" rel="noopener noreferrer">MySQL</a></li>
+          <li><a href="https://atlasgo.io/docs" class="link" target="_blank" rel="noopener noreferrer">Atlas</a></li>
         </ul>
       </dm-content>
     `;

@@ -189,6 +189,12 @@ class AboutMe extends LitElement {
       margin: 0;
     }
 
+    .pet-info {
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
     li {
       color: var(--table-secondary-color);
     }
@@ -249,6 +255,7 @@ class AboutMe extends LitElement {
   `;
 
 	@state() imageUrl = '';
+	@state() catsActive = false;
 	#currentIndex = 0;
 
 	connectedCallback() {
@@ -293,6 +300,15 @@ class AboutMe extends LitElement {
 		const currentLanguage = getUserLanguage();
 
 		return new Intl.DateTimeFormat(currentLanguage).format(birthDate);
+	}
+
+	showCats(event: MouseEvent) {
+		event.stopPropagation();
+		this.catsActive = true;
+	}
+
+	hideCats() {
+		this.catsActive = false;
 	}
 
 	render() {
@@ -346,6 +362,10 @@ class AboutMe extends LitElement {
                     <th scope="row">${msg('domicile')}:</th>
                     <td>Mannheim</td>
                   </tr>
+                  <tr>
+                    <th scope="row">${msg('pets')}:</th>
+                    <td><div class="pet-info" @click=${this.showCats}>Asta & Yuno</div></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -380,13 +400,24 @@ class AboutMe extends LitElement {
               <div class="table-title">${msg('Hobbies')}:</div>
                 <ul class="hobbies-list">
                   <li>${msg('Eating / Cooking')}</li>
-                  <li>${msg('Drawing / Digital Art')}</li>
-                  <li>${msg('Gaming / Board games')}</li>
                   <li>${msg('Playing electric guitar')}</li>
+                  <li>${msg('Gaming / Board games')}</li>
+                  <li>${msg('Drawing / Digital Art')}</li>
                 </ul>
             </div>
           </div>
         </dm-content>
+        ${
+					this.catsActive
+						? html`
+              <dm-cat
+                catOne="./assets/img/asta.png"
+                catTwo="./assets/img/yuno.png"
+                @close=${this.hideCats}
+              ></dm-cat>
+            `
+						: ''
+				}
       </div>
     `;
 	}

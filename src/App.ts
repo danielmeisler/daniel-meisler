@@ -78,7 +78,11 @@ class App extends LitElement {
 			{
 				name: 'career',
 				label: msg('career'),
-				content: [html`<dm-career></dm-career>`, html`<dm-school></dm-school>`],
+				content: [
+					html`<dm-current></dm-current>`,
+					html`<dm-career></dm-career>`,
+					html`<dm-school></dm-school>`,
+				],
 			},
 			{
 				name: 'skills',

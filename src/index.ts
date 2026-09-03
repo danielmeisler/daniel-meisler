@@ -1,7 +1,9 @@
 import './App.js';
 
 import './components/BackButton.js';
+import './components/Beyblade.js';
 import './components/CareerSection.js';
+import './components/Cats.js';
 import './components/Content.js';
 import './components/Headline.js';
 import './components/Logo.js';
@@ -15,6 +17,7 @@ import './components/SpeechBubble.js';
 import './content/aboutMe/AboutMe.js';
 import './content/blog/Blog.js';
 import './content/career/Career.js';
+import './content/career/Current.js';
 import './content/career/School.js';
 import './content/contact/Contact.js';
 import './content/settings/Settings.js';
