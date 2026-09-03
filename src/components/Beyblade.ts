@@ -21,6 +21,10 @@ class Beyblade extends LitElement {
       aspect-ratio: 1 / 1;
       object-fit: contain;
       will-change: transform;
+			user-select: none;
+			-webkit-user-select: none;
+			-webkit-touch-callout: none;
+			pointer-events: none;
     }
 
 		@media (hover: hover) {
