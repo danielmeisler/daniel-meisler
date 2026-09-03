@@ -10,8 +10,10 @@ class Beyblade extends LitElement {
 		.container {
 			cursor: pointer;
 			user-select: none;
+			touch-action: none;
 			-webkit-user-select: none;
 			-webkit-touch-callout: none;
+			-webkit-tap-highlight-color: transparent;
 			transform: scale(1) rotate(0deg);
 			transition: transform var(--animation-time) ease;
 		}
@@ -21,10 +23,11 @@ class Beyblade extends LitElement {
       aspect-ratio: 1 / 1;
       object-fit: contain;
       will-change: transform;
+			pointer-events: none;
 			user-select: none;
 			-webkit-user-select: none;
 			-webkit-touch-callout: none;
-			pointer-events: none;
+			-webkit-user-drag: none;
     }
 
 		@media (hover: hover) {
@@ -187,6 +190,7 @@ class Beyblade extends LitElement {
 				<img
 					src="./assets/img/foolsparadise_logo.png"
 					alt="foolsparadise GmbH Logo"
+					draggable="false"
 				/>
       </div>
     `;
