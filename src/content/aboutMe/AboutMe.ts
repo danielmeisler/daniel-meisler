@@ -400,9 +400,9 @@ class AboutMe extends LitElement {
               <div class="table-title">${msg('Hobbies')}:</div>
                 <ul class="hobbies-list">
                   <li>${msg('Eating / Cooking')}</li>
-                  <li>${msg('Playing electric guitar')}</li>
                   <li>${msg('Gaming / Board games')}</li>
                   <li>${msg('Drawing / Digital Art')}</li>
+                  <li>${msg('Playing electric guitar')}</li>
                 </ul>
             </div>
           </div>

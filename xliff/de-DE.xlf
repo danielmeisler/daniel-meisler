@@ -270,6 +270,34 @@
   <source>Playing electric guitar</source>
   <target>E-Gitarre spielen</target>
 </trans-unit>
+<trans-unit id="sdfbd880dd70a4717">
+  <source>pets</source>
+  <target>haustiere</target>
+</trans-unit>
+<trans-unit id="sb8ef55aef4ed070c">
+  <source>Current Profession</source>
+  <target>Aktuelle Beruf</target>
+</trans-unit>
+<trans-unit id="s517c87d5c1fabfa9">
+  <source>Webdeveloper</source>
+  <target>Webentwickler</target>
+</trans-unit>
+<trans-unit id="sd6040d832dc0b83a">
+  <source>Full-Stack development of web applications</source>
+  <target>Full-Stack-Entwicklung von Webanwendungen</target>
+</trans-unit>
+<trans-unit id="s492e3d2ecfe7948c">
+  <source>Next.js, React</source>
+  <target>Next.js, React</target>
+</trans-unit>
+<trans-unit id="s10c9e5d099f5a0cb">
+  <source>TypeScript, Go, HTML, SCSS,</source>
+  <target>TypeScript, Go, HTML, SCSS,</target>
+</trans-unit>
+<trans-unit id="s36b201be2cf5e509">
+  <source>Docker, MySQL</source>
+  <target>Docker, MySQL</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
